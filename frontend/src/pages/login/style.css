@@ -1,0 +1,31 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  font-family: sans-serif;
+}
+
+.login-form {
+  width: min(22rem, 85vw);
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.login-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.login-field input {
+  padding: 0.7rem;
+  font: inherit;
+}
+
+.login-form button {
+  padding: 0.7rem;
+  cursor: pointer;
+}
