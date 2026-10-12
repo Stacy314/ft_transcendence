@@ -1,0 +1,7 @@
+.git
+log/*
+tmp/*
+storage/*
+node_modules
+.env
+config/master.key
