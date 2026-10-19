@@ -15,6 +15,9 @@ services:
     ports:
       - "3000:3000"
     env_file: .env
+    volumes:
+      - ./backend/db:/app/db
+      - ./backend/app:/app/app
     environment:
       PGHOST: db
       PGPASSWORD: ${POSTGRES_PASSWORD}
