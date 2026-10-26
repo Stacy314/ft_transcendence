@@ -13,6 +13,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  background-color: #e1b671;
   padding: 1rem 2rem;
 }
 
@@ -21,4 +22,9 @@
   display: grid;
   place-items: center;
   width: 100%;
+}
+
+.site-layout > footer {
+  background-color: #e1b671;
+  padding: 1rem 2rem;
 }
