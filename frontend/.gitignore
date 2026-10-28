@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# dependencies and build
+node_modules
+dist
+
+# Vite cache
+.vite
+
+# environment (keep .env.example!)
+.env
+.env.local
+.env.*.local
+
+# backups from the init script
+*.bak
+
+# logs and OS files
+*.log
+.DS_Store
