@@ -56,3 +56,6 @@ dkms.conf
 
 
 backend/config/master.key
+/backend/tmp/cache/
+/backend/log/
+/backend/tmp/local_secret.txt
