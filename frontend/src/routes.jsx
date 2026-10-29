@@ -4,6 +4,7 @@ import Login from './pages/login/login.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
 import GotchiSelection from './pages/gotchi_selection/gotchi_selection.jsx';
 import ForgotPassword from './pages/forgot_password/forgot_password.jsx';
+import Profile from './pages/profile/profile.jsx';
 
 function NotFound() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoutes() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/gotchi-selection" element={<GotchiSelection />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
