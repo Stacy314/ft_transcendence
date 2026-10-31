@@ -12,7 +12,7 @@ Rails.application.configure do
     policy.object_src  :none
     policy.script_src  :self
     policy.style_src   :self, :https
-    policy.connect_src :self, ENV.fetch("FRONTEND_URL", "http://localhost:5173")
+    policy.connect_src :self
   end
 
   config.content_security_policy_report_only = Rails.env.development?

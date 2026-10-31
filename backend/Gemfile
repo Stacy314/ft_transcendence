@@ -37,9 +37,6 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-# Handle Cross-Origin Resource Sharing (CORS), so the frontend SPA can call this API
-gem "rack-cors"
-
 group :development, :test do
   # Load environment variables from .env files
   gem "dotenv-rails"
