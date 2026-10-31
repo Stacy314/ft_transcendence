@@ -105,3 +105,12 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.gotchi-error {
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  color: #651010;
+  background: #ffe6e6;
+  font-size: 0.9rem;
+}
