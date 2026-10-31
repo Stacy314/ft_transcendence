@@ -16,8 +16,6 @@ RUN bundle install
 
 COPY . .
 
-RUN SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
-
 RUN useradd -m rails && chown -R rails:rails /app
 USER rails
 
