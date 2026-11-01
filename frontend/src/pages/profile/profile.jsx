@@ -70,7 +70,7 @@ export default function Profile() {
     }
 
     return (
-        <main className="mx-auto max-w-4xl p-6">
+        <main className="mx-auto w-full max-w-5xl p-6">
             <div className="flex md:flex-row flex-col gap-6 bg-white rounded-2xl p-5 shadow-sm md-flex-row text-black">
                 <section className="flex flex-col items-center gap-3 rounded-xl bg-lime-100 p-6 md:w-1/3">
         
@@ -126,7 +126,7 @@ export default function Profile() {
                 </p>
                 {isEditing && (
                 <form onSubmit={handleSave}
-                    className="mt-6 bg-white p-5">
+                    className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 gap-y-4 text-lg">
                     
                     <label htmlFor="username" className="mb-2 block font-medium">
                         Username
@@ -143,7 +143,7 @@ export default function Profile() {
                     />
                     {
                         usernameError && (
-                            <p id="username-error" role="alert" className="mt-2 text-sm text-red-600">
+                            <p id="username-error" role="alert" className="col-start-2 text-sm text-red-600">
                                 {usernameError}
                             </p>
                     )}
@@ -161,7 +161,7 @@ export default function Profile() {
                         aria-describedby={nameError ? "name-error" : undefined}
                     />
                     {nameError && (
-                        <p id="name-error" role="alert" className="mt-2 text-sm text-red-600">
+                        <p id="name-error" role="alert" className="col-start-2 text-sm text-red-600">
                             {nameError}
                         </p>
                     )}
@@ -179,7 +179,7 @@ export default function Profile() {
                         className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-200"
                     />
 
-                    <div className="mt-4 flex justify-end gap-3">
+                    <div className="col-span-2 mt-4 flex justify-end gap-3 text-sm">
                         <button
                         type="submit"
                         disabled={!hasProfileChanged}
