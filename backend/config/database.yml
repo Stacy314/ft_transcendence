@@ -87,18 +87,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: app_production
-    username: backend
+    database: <%= ENV.fetch("POSTGRES_DB", "app_production") %>
+    username: <%= ENV.fetch("POSTGRES_USER", "backend") %>
     password: <%= ENV["BACKEND_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: app_production_cache
+    database: <%= ENV.fetch("POSTGRES_DB", "app_production") %>_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: app_production_queue
+    database: <%= ENV.fetch("POSTGRES_DB", "app_production") %>_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: app_production_cable
+    database: <%= ENV.fetch("POSTGRES_DB", "app_production") %>_cable
     migrations_paths: db/cable_migrate

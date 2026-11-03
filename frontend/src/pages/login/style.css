@@ -1,8 +1,12 @@
 .login-page {
-  min-height: 100vh;
+  align-self: center;
+  min-height: 31.4rem;
+  --login-color: #e1b671;
+  --register-color: #e1b671;
   display: grid;
-  place-content: center;
-  gap: 1rem;
+  align-content: start;
+  justify-content: center;
+  gap: 0;
   font-family: sans-serif;
 }
 
@@ -11,8 +15,13 @@
   display: grid;
   gap: 1rem;
   padding: 1.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 8px;
+  background: var(--login-color);
+  color: #fff;
+}
+
+.login-page.register .login-form {
+  background: var(--register-color);
 }
 
 .login-field {
@@ -20,12 +29,70 @@
   gap: 0.4rem;
 }
 
+.login-field-hidden {
+  display: none;
+}
+
+.login-field label {
+  height: 1.5rem;
+}
+
 .login-field input {
-  padding: 0.7rem;
+  height: 2.8rem;
+  padding: 0 0.7rem;
   font: inherit;
 }
 
 .login-form button {
-  padding: 0.7rem;
+  height: 2.8rem;
+  padding: 0 0.7rem;
+  border: none;
+  border-radius: 12px;
+  background: #7ec8f2;
+  color: #0b3b57;
+  font-weight: bold;
   cursor: pointer;
+}
+
+.login-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: calc(min(22rem, 85vw) * 2 / 3);
+  justify-self: start;
+}
+
+.login-buttons button {
+  border: none;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  opacity: 0.55;
+  height: 2.8rem;
+  padding: 0 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-buttons button:first-child {
+  background: var(--login-color);
+}
+
+.login-buttons button:last-child {
+  background: var(--register-color);
+}
+
+.login-buttons button.active {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.login-forgot {
+  justify-self: start;
+  margin-top: 0.75rem;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+.forgot-form {
+  border-radius: 8px;
 }
