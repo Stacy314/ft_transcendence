@@ -1,5 +1,5 @@
-import avatar from '../../assets/avatar_pink_hair_hoodie.png';
-import { useState } from 'react';
+import avatar from '../../assets/pastel_avatar_1.png';
+import { useState, useRef } from 'react';
 
 export default function Profile() {
 
@@ -31,6 +31,9 @@ export default function Profile() {
     draftUsername.trim() !== user.username ||
     draftEmail.trim() !== user.email;
     const [successMessage, setSuccessMessage] = useState("");
+    const avatarInputRef = useRef(null);
+    const [draftAvatar, setDraftAvatar] = useState(null);
+    const [avatarError, setAvatarError] = useState("");
 
     function handleSave(event) {
         event.preventDefault();
@@ -69,26 +72,132 @@ export default function Profile() {
         setIsEditing(false);
     }
 
+    function handleAvatarSelection(event) {
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        setAvatarError("");
+        
+        if (!["image/png", "image/jpeg"].includes(file.type)) {
+            setAvatarError("Please choose a PNG or JPEG image.");
+            return;
+        }
+
+        if (file.size > 1024 * 1024) {
+            setAvatarError("Please choose an image smaller than 1MB.");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setDraftAvatar(reader.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function handleAvatarSave() {
+        const updatedUser = {
+            ...user,
+            avatar: draftAvatar,
+        };
+        try {
+            localStorage.setItem("mockProfile", JSON.stringify(updatedUser));
+            setUser(updatedUser);
+            setDraftAvatar(null);
+            setAvatarError("");
+            avatarInputRef.current.value = "";
+        } catch {
+            setAvatarError("Could not save your avatar. Try a smaller image.");
+        }
+
+    }
+
+    function handleAvatarCancel() {
+        setDraftAvatar(null);
+        setAvatarError("");
+        avatarInputRef.current.value = "";
+    }
+
     return (
         <main className="mx-auto w-full max-w-5xl p-6">
             <div className="flex md:flex-row flex-col gap-6 bg-white rounded-2xl p-5 shadow-sm md-flex-row text-black">
                 <section className="flex flex-col items-center gap-3 rounded-xl bg-lime-100 p-6 md:w-1/3">
-        
-                    <img
+                                        <div className="relative">
+                        <img
                         className="h-42 w-42 rounded-full object-cover border-6 border-white"
-                        src={user.avatar}
-                        alt="User's avatar"
-                    />
+                        src={draftAvatar ?? user.avatar}
+                        alt="Avatar"
+                        />
+                        <input 
+                            ref={avatarInputRef}
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handleAvatarSelection}
+                            hidden
+                        />
+                        <button
+                            type="button"
+                            aria-label="Change avatar"
+                            title="Change avatar"
+                            className="absolute bottom-1 right-1 rounded-full border-2 border-white bg-gray-400 p-3 text-white shadow-md transition-colors hover:bg-gray-600 focus-visible:outline-2 focus-visible:outline-gray-700"
+                            onClick={() => avatarInputRef.current.click()}
+                        >
+                            <svg
+                                aria-hidden="true"
+                                viewBox="0 0 24 24"
+                                className="h-6 w-6"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3l-1.5-2Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {avatarError && (
+                        <p role="alert" className="text-center text-sm text-red-600">
+                            {avatarError}
+                        </p>
+                    )}
+
+                    {draftAvatar !== null && (
+                        <div className="flex gap-2">
+                            <button
+                                type="button"
+                                onClick={handleAvatarSave}
+                                className="rounded-lg bg-lime-600 px-3 py-2 text-sm text-white font-semibold hover:bg-lime-700"
+                            >
+                                Save
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleAvatarCancel}
+                                className="rounded-lg bg-orange-500 px-3 py-2 text-sm text-white font-semibold hover:bg-orange-600"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    )}
                     <h1 className="text-4xl font-bold">
                         {user.username}
                     </h1>
                     <p className="text-center text-sm text-gray-600">
                         Member since {user.joined}
                     </p>
+
                     <button
                         type="button"
                         disabled={isEditing}
-                        className="rounded-lg bg-lime-600 px-6 py-2 text-white hover:bg-lime-700 hover:shadow-xl focus-visible:outline-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="rounded-lg bg-lime-600 px-6 py-2 text-white font-semibold hover:bg-lime-700 hover:shadow-xl focus-visible:outline-2 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                         onClick={() => {
                                 setDraftName(user.name);
                                 setDraftUsername(user.username);
@@ -188,7 +297,7 @@ export default function Profile() {
                         Save changes
                         </button>
                         <button type="button"
-                            className="rounded-lg bg-orange-600 px-4 py-2 font-semibold text-white hover:bg-orange-700"
+                            className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
                             onClick={()=> {
                                 setDraftName(user.name);
                                 setDraftUsername(user.username);
