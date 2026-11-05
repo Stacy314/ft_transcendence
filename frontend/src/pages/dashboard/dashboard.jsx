@@ -1,16 +1,9 @@
 import './style.css';
 import { GOTCHIS } from '../gotchi_selection/gotchis.js';
-
-function loadGotchi() {
-  try {
-    return JSON.parse(localStorage.getItem('gotchi')) || {};
-  } catch {
-    return {};
-  }
-}
+import { loadCurrentUserGotchi } from '../../utils/gotchi_storage.js';
 
 export default function Dashboard() {
-  const gotchi = loadGotchi();
+  const gotchi = loadCurrentUserGotchi();
   const type = GOTCHIS.find((g) => g.id === gotchi.type) || GOTCHIS[0];
 
   return (

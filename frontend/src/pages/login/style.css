@@ -54,6 +54,20 @@
   cursor: pointer;
 }
 
+.login-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-error {
+  margin: 0;
+  color: #651010;
+  background: #ffe6e6;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.9rem;
+}
+
 .login-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
