@@ -2,7 +2,7 @@ require "test_helper"
 
 class ApiSessionsTest < ActionDispatch::IntegrationTest
   test "registering creates an authenticated session" do
-    post "/api/registration", params: {
+    post "/api/auth/signup", params: {
       user: {
         username: "cookie_user",
         email: "cookie@example.com",
@@ -14,7 +14,7 @@ class ApiSessionsTest < ActionDispatch::IntegrationTest
     assert_response :created
     assert_equal "cookie_user", response.parsed_body.dig("user", "username")
 
-    get "/api/session"
+    get "/api/auth/me"
 
     assert_response :success
     assert_equal "cookie_user", response.parsed_body.dig("user", "username")
@@ -27,17 +27,19 @@ class ApiSessionsTest < ActionDispatch::IntegrationTest
       password: "secure-password"
     )
 
-    post "/api/session", params: {
-      username: "login_user",
-      password: "secure-password"
+    post "/api/auth/login", params: {
+      session: {
+        username: "login_user",
+        password: "secure-password"
+      }
     }
 
-    assert_response :created
+    assert_response :success
 
-    delete "/api/session"
+    delete "/api/auth/logout"
     assert_response :no_content
 
-    get "/api/session"
+    get "/api/auth/me"
     assert_response :unauthorized
   end
 
@@ -48,12 +50,14 @@ class ApiSessionsTest < ActionDispatch::IntegrationTest
       password: "secure-password"
     )
 
-    post "/api/session", params: {
-      username: "cookie_check",
-      password: "secure-password"
+    post "/api/auth/login", params: {
+      session: {
+        username: "cookie_check",
+        password: "secure-password"
+      }
     }
 
-    assert_response :created
+    assert_response :success
 
     cookie = response.headers["Set-Cookie"]
 
@@ -80,37 +84,41 @@ class ApiSessionsTest < ActionDispatch::IntegrationTest
 
     assert_not_nil csrf_token
 
-    post "/api/session",
+    post "/api/auth/login",
          params: {
-           username: "csrf_check",
-           password: "secure-password"
+           session: {
+             username: "csrf_check",
+             password: "secure-password"
+           }
          },
          headers: {
            "X-CSRF-Token" => csrf_token
          }
 
-    assert_response :created
+    assert_response :success
   ensure
     ActionController::Base.allow_forgery_protection = previous_setting
   end
+
   test "login rejects requests without a CSRF token" do
-  previous_setting = ActionController::Base.allow_forgery_protection
-  ActionController::Base.allow_forgery_protection = true
+    previous_setting = ActionController::Base.allow_forgery_protection
+    ActionController::Base.allow_forgery_protection = true
 
-  User.create!(
-    username: "no_csrf_user",
-    email: "no_csrf@example.com",
-    password: "secure-password"
-  )
+    User.create!(
+      username: "no_csrf_user",
+      email: "no_csrf@example.com",
+      password: "secure-password"
+    )
 
-  post "/api/session", params: {
-    username: "no_csrf_user",
-    password: "secure-password"
-  }
+    post "/api/auth/login", params: {
+      session: {
+        username: "no_csrf_user",
+        password: "secure-password"
+      }
+    }
 
-  assert_response :unprocessable_entity
-ensure
-  ActionController::Base.allow_forgery_protection = previous_setting
-end
-
+    assert_response :unprocessable_entity
+  ensure
+    ActionController::Base.allow_forgery_protection = previous_setting
+  end
 end

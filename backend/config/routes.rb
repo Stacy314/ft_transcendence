@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  namespace :api do
+  namespace :api, defaults: { format: :json } do
+    # The frontend reads this before a state-changing request and returns it as
+    # X-CSRF-Token. Nginx serves both applications from one origin, so no CORS
+    # configuration is needed.
     get "csrf", to: "csrf#show"
-    post "registration", to: "registrations#create"
-    resource :session, only: %i[create destroy show]
+
+    post "auth/signup", to: "registrations#create"
+    post "auth/login", to: "sessions#create"
+    delete "auth/logout", to: "sessions#destroy"
+    get "auth/me", to: "sessions#show"
+
+    resources :pets, only: :create
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -18,9 +26,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  namespace :api, defaults: { format: :json } do
-    resources :users, only: :create
-    resources :sessions, only: :create
-    resources :pets, only: :create
-  end
 end
