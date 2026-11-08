@@ -1,4 +1,4 @@
-include .env
+-include .env
 
 COMPOSE = docker compose
 
@@ -6,7 +6,28 @@ COMPOSE = docker compose
 
 .PHONY: help build up down rebuild logs ps \
         generate db-migrate db-rollback db-seed db-reset \
-        console psql clean
+        console psql clean \
+		fe-install fe-dev fe-lint fe-format fe-build fe-clean
+
+## ---  frontend ---
+
+fe-install: ## install exact frontend dependencies from package-lock.json
+	cd frontend && npm ci
+
+fe-dev: ## start the Vite dev server on http://localhost:5173
+	cd frontend && npm run dev
+
+fe-lint: ## check frontend code (ESLint) and formatting (Prettier)
+	cd frontend && npm run lint && npm run format:check
+
+fe-format: ## auto-format frontend code with Prettier
+	cd frontend && npm run format
+
+fe-build: ## build the frontend production bundle into frontend/dist
+	cd frontend && npm run build
+
+fe-clean: ## remove frontend node_modules, dist and the Vite cache
+	rm -rf frontend/node_modules frontend/dist frontend/.vite
 
 ## --- containers ---
 

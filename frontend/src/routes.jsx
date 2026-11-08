@@ -15,6 +15,7 @@ function ProtectedRoute() {
 
   return <Outlet />;
 }
+import Profile from './pages/profile/profile.jsx';
 
 function NotFound() {
   return (
@@ -33,12 +34,16 @@ export default function AppRoutes() {
         <Route element={<HeaderFooter />}>
           <Route path="/" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
-          <Route element={<ProtectedRoute />}>
+/*
+     Protected route (Pages that need sigin user to accses) 
+*/
+         <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/gotchi-selection" element={<GotchiSelection />} />
+             <Route path="/profile" element={<Profile />} />
           </Route>
 
+          
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
