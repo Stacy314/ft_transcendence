@@ -55,6 +55,7 @@ api.interceptors.request.use(async (config) => {
 // the router can replace it with a soft navigate():
 //   setUnauthorizedHandler(() => navigate('/login', { replace: true }))
 const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
+const AUTH_ENDPOINTS = ['/session', '/registration', '/csrf'];
 
 let onUnauthorized = () => {
   if (!PUBLIC_PATHS.includes(window.location.pathname)) {
@@ -90,17 +91,17 @@ api.interceptors.response.use(
       return api(config);
     }
 
-    // GET /session answering 401 just means "nobody is logged in";
-    // getCurrentUser() handles that, so it is not an expired session.
-    const isSessionCheck =
-      config?.url === '/session' && config?.method === 'get';
-
-    if (status === 401 && !isSessionCheck) {
+    // On the auth endpoints a 401 is an expected answer, not an expired
+    // session: GET /session = "nobody is logged in", POST /session =
+    // "wrong username or password". The caller handles those itself.
+    const isAuthEndpoint = AUTH_ENDPOINTS.includes(config?.url);
+ 
+    if (status === 401 && !isAuthEndpoint) {
       resetCsrfToken();
       useAuthStore.getState().clearUser();
       onUnauthorized();
     }
-
+ 
     return Promise.reject(error);
   },
 );
