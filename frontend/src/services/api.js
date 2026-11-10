@@ -54,7 +54,7 @@ api.interceptors.request.use(async (config) => {
 // What to do when the session has expired. Defaults to a full page redirect;
 // the router can replace it with a soft navigate():
 //   setUnauthorizedHandler(() => navigate('/login', { replace: true }))
-const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
+export const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
 const AUTH_ENDPOINTS = ['/session', '/registration', '/csrf'];
 
 let onUnauthorized = () => {
