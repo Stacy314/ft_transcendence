@@ -57,6 +57,13 @@ dkms.conf
 .env
 
 backend/config/master.key
-/backend/tmp/cache/
-/backend/log/
-/backend/tmp/local_secret.txt
+
+# Rails runtime files
+/backend/log/*
+!/backend/log/.keep
+/backend/tmp/*
+!/backend/tmp/.keep
+!/backend/tmp/pids/
+!/backend/tmp/pids/.keep
+!/backend/tmp/storage/
+!/backend/tmp/storage/.keep
