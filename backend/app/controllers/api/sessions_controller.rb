@@ -14,11 +14,7 @@ module Api
     end
 
     def show
-      if current_user
-        render json: { user: user_json(current_user) }
-      else
-        render json: { errors: ["Not authenticated"] }, status: :unauthorized
-      end
+      render json: { user: current_user ? user_json(current_user) : nil }
     end
 
     def destroy
