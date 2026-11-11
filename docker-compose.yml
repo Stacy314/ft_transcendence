@@ -21,6 +21,9 @@ services:
     environment:
       PGHOST: db
       PGPASSWORD: ${POSTGRES_PASSWORD}
+      # remove after nginx setup
+      RAILS_ASSUME_SSL: "false"
+      RAILS_FORCE_SSL: "false"
     depends_on:
       db:
         condition: service_healthy
