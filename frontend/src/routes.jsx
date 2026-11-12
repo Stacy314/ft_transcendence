@@ -5,6 +5,8 @@ import Dashboard from './pages/dashboard/dashboard.jsx';
 import GotchiSelection from './pages/gotchi_selection/gotchi_selection.jsx';
 import ForgotPassword from './pages/forgot_password/forgot_password.jsx';
 import Profile from './pages/profile/profile.jsx';
+import PrivacyPolicy from './pages/privacy_policy/privacy_policy.jsx';
+import TermsOfService from './pages/terms_of_service/terms_of_service.jsx';
 
 function NotFound() {
   return (
@@ -26,6 +28,8 @@ export default function AppRoutes() {
           <Route path="/gotchi-selection" element={<GotchiSelection />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
