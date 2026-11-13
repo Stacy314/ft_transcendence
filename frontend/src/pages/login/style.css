@@ -96,3 +96,33 @@
 .forgot-form {
   border-radius: 8px;
 }
+
+/* Message under a field */
+.login-error {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #7a1010;
+}
+
+/* Field with an error */
+.login-field input[aria-invalid='true'] {
+  outline: 2px solid #7a1010;
+  outline-offset: -2px;
+}
+
+/* General message above the button (e.g. wrong password, server down) */
+.login-alert {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: #fff4f2;
+  color: #7a1010;
+  font-weight: bold;
+}
+
+/* Button while the request is running */
+.login-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
