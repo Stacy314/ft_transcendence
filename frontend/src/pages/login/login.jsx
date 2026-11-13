@@ -101,10 +101,12 @@ export default function Login({ initialMode = 'login' }) {
         { username: form.username.trim(), password: form.password },
         {
           // Back to the page that sent the user here (expired session), else dashboard
-          onSuccess: () =>
-            navigate(location.state?.from?.pathname || '/dashboard', {
+          onSuccess: () => {
+            const from = location.state?.from;
+            navigate(from ? `${from.pathname}${from.search || ''}${from.hash || ''}` : '/dashboard', {
               replace: true,
-            }),
+            });
+          },
           onError: showServerError,
         },
       );

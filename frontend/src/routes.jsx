@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { useCurrentUser } from './hooks/useMe';
 import AuthBootstrap from './components/AuthBootstrap';
+import ProtectedRoute from './components/ProtectedRoute';
 import HeaderFooter from './pages/header_footer/header_footer.jsx';
 import Login from './pages/login/login.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
@@ -33,10 +34,12 @@ export default function AppRoutes() {
             <Route path="/" element={<HomeRedirect />}/>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Login initialMode="register" />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/gotchi-selection" element={<GotchiSelection />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/gotchi-selection" element={<GotchiSelection />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
