@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { useCurrentUser } from './hooks/useMe';
+import AuthBootstrap from './components/AuthBootstrap';
 import HeaderFooter from './pages/header_footer/header_footer.jsx';
 import Login from './pages/login/login.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
@@ -16,19 +18,28 @@ function NotFound() {
   );
 }
 
+// "/" has no page of its own: send the user where they belong
+function HomeRedirect() {
+  const { isLoggedIn } = useCurrentUser();
+  return <Navigate to={isLoggedIn ? '/dashboard' : '/login'} replace />;
+}
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<HeaderFooter />}>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/gotchi-selection" element={<GotchiSelection />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <AuthBootstrap>
+        <Routes>
+          <Route element={<HeaderFooter />}>
+            <Route path="/" element={<HomeRedirect />}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/gotchi-selection" element={<GotchiSelection />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </AuthBootstrap>
     </BrowserRouter>
   );
 }
