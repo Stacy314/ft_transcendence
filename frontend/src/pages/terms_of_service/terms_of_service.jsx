@@ -226,8 +226,7 @@ export default function TermsOfService() {
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">10. Privacy</h2>
 
                 <p>
-                Personal data is handled as described in our
-                <a href="/privacy">Privacy Policy</a>.
+                Personal data is handled as described in our <a href="/privacy">Privacy Policy</a>.
                 </p>
 
                 <p>
@@ -240,8 +239,7 @@ export default function TermsOfService() {
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">11. Disclaimer</h2>
 
                 <p>
-                The application is provided <strong>"as is"</strong> and
-                <strong>"as available"</strong> for educational purposes.
+                The application is provided <em>as is</em> and <em>as available</em> for educational purposes.
                 </p>
 
                 <p>
