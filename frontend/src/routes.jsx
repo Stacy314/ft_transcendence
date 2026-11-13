@@ -32,6 +32,7 @@ export default function AppRoutes() {
           <Route element={<HeaderFooter />}>
             <Route path="/" element={<HomeRedirect />}/>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Login initialMode="register" />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/gotchi-selection" element={<GotchiSelection />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
