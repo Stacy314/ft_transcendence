@@ -49,6 +49,9 @@ up: ## start db + backend in the background
 down: ## stop and remove containers
 	$(COMPOSE) down
 
+restart: ## restart without rebuilding (all, or one: make restart SERVICE=frontend)
+	$(COMPOSE) restart $(SERVICE)
+	
 rebuild: build ## rebuild rebuild from scratch and restart  
 	$(COMPOSE) build --no-cache $(SERVICE)
 	$(COMPOSE) up -d --force-recreate --renew-anon-volumes $(SERVICE)
