@@ -55,8 +55,18 @@ dkms.conf
 *.dwo
 
 .env
+.env.local
+.env.*.local
+
+*.log
+*.bak
+.DS_Store
 
 backend/config/master.key
 /backend/tmp/cache/
 /backend/log/
 /backend/tmp/local_secret.txt
+
+frontend/dist
+frontend/.vite
+frontend/node_modules

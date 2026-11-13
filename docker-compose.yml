@@ -32,6 +32,9 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    environment:
+      API_PROXY_TARGET: http://backend:3000
+      VITE_API_URL: /api
 
 #  nginx:
 #    build: ./nginx
