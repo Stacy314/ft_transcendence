@@ -1,15 +1,15 @@
 export default function TermsOfService() {
     return (
-        <main className="text-black bg-amber-50 p-10 rounded-2xl">
-            <h1>Terms of Service</h1>
+        <main className="text-black bg-amber-50 p-10 rounded-2xl mx-full lg:w-10/12 shadow-xl">
+            <h1 className="text-3xl font-bold mb-4 mt-4 border-b-4">Terms of Service</h1>
 
-            <p>Last updated: [DATE]</p>
+            <p className="italic">Last updated: <time dateTime="2026-11-13">13/11/2026</time></p>
 
-            <section>
-                <h2>1. About the service</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">1. About the service</h2>
 
                 <p>
-                [APP NAME] is a non-commercial web application created by students as
+                Transcenagochi is a non-commercial web application created by students as
                 part of the 42 school curriculum.
                 </p>
 
@@ -20,7 +20,7 @@ export default function TermsOfService() {
 
                 <p>
                 It is not an official product or service of 42 and is not operated,
-                supported, or guaranteed by 42 unless explicitly stated otherwise.
+                supported, or guaranteed by 42.
                 </p>
 
                 <p>
@@ -28,17 +28,17 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>2. Use of the application</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">2. Use of the application</h2>
 
                 <p>
-                You may use [APP NAME] for its intended purposes, including testing and
+                You may use Transcenagochi for its intended purposes, including testing and
                 using the features provided through the application.
                 </p>
 
                 <p>You agree not to:</p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>
                     attempt to gain unauthorised access to another user's account;
                 </li>
@@ -59,14 +59,14 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>3. User accounts</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">3. User accounts</h2>
 
                 <p>Some functionality may require a user account.</p>
 
                 <p>You are responsible for:</p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>providing reasonably accurate account information;</li>
                 <li>protecting your login credentials;</li>
                 <li>not intentionally sharing access to another user's account; and</li>
@@ -82,8 +82,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>4. User profiles and content</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">4. User profiles and content</h2>
 
                 <p>
                 The application may allow users to create profiles, upload avatars, send
@@ -94,7 +94,7 @@ export default function TermsOfService() {
 
                 <p>You must not knowingly submit content that:</p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>violates applicable law;</li>
                 <li>infringes another person's rights;</li>
                 <li>contains malware or malicious code;</li>
@@ -110,8 +110,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>5. Games, scores and rankings</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">5. Games, scores and rankings</h2>
 
                 <p>
                 The application may provide games, scores, rankings, achievements,
@@ -133,16 +133,16 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>6. Availability of the service</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">6. Availability of the service</h2>
 
                 <p>
-                [APP NAME] is a student project under active development.
+                Transcenagochi is a student project under active development.
                 </p>
 
                 <p>The application may therefore:</p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>contain bugs;</li>
                 <li>experience downtime;</li>
                 <li>be restarted or redeployed;</li>
@@ -156,8 +156,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>7. Educational and experimental nature</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">7. Educational and experimental nature</h2>
 
                 <p>
                 The application is not intended to provide a production-grade commercial
@@ -177,8 +177,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>8. Intellectual property</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">8. Intellectual property</h2>
 
                 <p>
                 The software and original project materials are owned by their respective
@@ -203,8 +203,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>9. Third-party services</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">9. Third-party services</h2>
 
                 <p>
                 Some features may depend on third-party software or services, such as
@@ -222,8 +222,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>10. Privacy</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">10. Privacy</h2>
 
                 <p>
                 Personal data is handled as described in our
@@ -236,8 +236,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>11. Disclaimer</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">11. Disclaimer</h2>
 
                 <p>
                 The application is provided <strong>"as is"</strong> and
@@ -249,7 +249,7 @@ export default function TermsOfService() {
                 and secure, we do not guarantee that it will:
                 </p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>always be available;</li>
                 <li>be free from bugs or errors;</li>
                 <li>preserve all user data;</li>
@@ -263,8 +263,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>12. Limitation of responsibility</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">12. Limitation of responsibility</h2>
 
                 <p>
                 To the extent permitted by applicable law, the project authors are not
@@ -278,12 +278,12 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>13. Suspension or termination</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">13. Suspension or termination</h2>
 
                 <p>Access may be restricted or terminated where a user:</p>
 
-                <ul>
+                <ul className="list-disc ml-4 mb-2">
                 <li>seriously violates these Terms;</li>
                 <li>attempts to compromise the security of the application;</li>
                 <li>interferes with other users; or</li>
@@ -296,8 +296,8 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>14. Changes</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">14. Changes</h2>
 
                 <p>
                 Because the project is under active development, these Terms may be
@@ -309,16 +309,16 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section>
-                <h2>15. Contact</h2>
+            <section className="space-y-2">
+                <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">15. Contact</h2>
 
                 <address>
-                <strong>[PROJECT / TEAM NAME]</strong><br />
-                Email: [TEAM EMAIL]
+                <strong>Transcenagochi</strong><br />
+                Email: transcenagochi@proton.me
                 </address>
 
                 <p>
-                [APP NAME] is a student project created as part of the 42 curriculum and
+                Transcenagochi is a student project created as part of the 42 curriculum and
                 is not an official service of 42.
                 </p>
             </section>

@@ -9,42 +9,42 @@ export default function PrivacyPolicy() {
                 Last updated: <time dateTime="2026-11-13">13/11/2026</time>
             </p>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     1. About this project
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Transcenagochi is a non-commercial web application created by students as
                     part of the 42 school curriculum.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     The application is intended for educational, demonstration, testing,
                     and evaluation purposes. It is not an official service of 42 and is not
                     operated by 42.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     For questions about this Privacy Policy or the handling of your personal
                     data, you can contact the project team at: <em>transcenagochi@proton.me</em>.
                 </p>
 
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     2. What data we collect
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Depending on the features you use, we may process the following
                     information.
                 </p>
 
                 <h3 className="text-xl font-bold mb-2">Account information</h3>
 
-                <p className="mb-2">
+                <p>
                     When you create or use an account, we may process:
                 </p>
 
@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
 
                 <h3 className="text-xl font-bold mb-2">Profile information</h3>
 
-                <p className="mb-2">
+                <p>
                     If you create or edit a profile, we may process information such as:
                 </p>
 
@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
                     <li>profile preferences.</li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     Providing optional profile information is voluntary.
                 </p>
 
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
                     Game and application data
                 </h3>
 
-                <p className="mb-2">
+                <p>
                     When you use the application, we may store information necessary for its
                     features, such as:
                 </p>
@@ -98,33 +98,33 @@ export default function PrivacyPolicy() {
                     Messages and user-generated content
                 </h3>
 
-                <p className="mb-2">
+                <p>
                     Transcenagochi includes a chat feature that allows users to communicate
                     with each other.
                 </p>
 
-                <p className="mb-2">When you use the chat, we process the content of your messages in order to deliver and display them to the intended recipients.</p>
+                <p>When you use the chat, we process the content of your messages in order to deliver and display them to the intended recipients.</p>
 
-                <p className="mb-2">
+                <p>
                     We may also process information associated with messages, such as the
                     sender, recipient, and time the message was sent, where this is necessary
                     for the operation of the chat feature.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Messages may be stored as part of the chat functionality. Information
                     about how long messages are retained is described in the Data Retention
                     section of this Privacy Policy.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Please do not use the chat to share sensitive personal information or
                     information about another person without their permission.
                 </p>
 
                 <h3 className="text-xl font-bold mb-2">Technical data</h3>
 
-                <p className="mb-2">
+                <p>
                     For security, debugging, and operation of the application, the server may
                     process technical information such as:
                 </p>
@@ -137,17 +137,17 @@ export default function PrivacyPolicy() {
                     <li>server logs.</li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     We do not use this information for advertising or commercial profiling.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     3. How we use your data
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     We use personal data only as necessary to operate and demonstrate the
                     application. This may include:
                 </p>
@@ -165,21 +165,21 @@ export default function PrivacyPolicy() {
                     <li>fulfilling the requirements of the 42 school project.</li>
                 </ul>
 
-                <p className="mb-2">We do not sell personal data.</p>
-                <p className="mb-2">We do not use personal data for advertising.</p>
+                <p>We do not sell personal data.</p>
+                <p>We do not use personal data for advertising.</p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     4. Legal basis
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Where the General Data Protection Regulation (GDPR) applies, we process
                     personal data only where there is a legal basis for doing so.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Depending on the purpose of the processing, this may include:
                 </p>
 
@@ -203,18 +203,18 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     Where processing is based on consent, you may withdraw your consent at
                     any time.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     5. Browser storage and cookies
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     The application may use necessary browser storage, such as cookies,
                     session storage, or local storage, for purposes including:
                 </p>
@@ -226,7 +226,7 @@ export default function PrivacyPolicy() {
                     <li>supporting application functionality.</li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     We do not use advertising cookies or cross-site behavioural tracking.
                 </p>
             </section>
@@ -236,11 +236,11 @@ export default function PrivacyPolicy() {
                     6. Sharing of data
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Personal data is not sold or shared for advertising purposes.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Data may be processed by services required to operate the project, for
                     example:
                 </p>
@@ -256,56 +256,56 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     Where third-party services are used, they may process limited personal
                     data according to their own privacy terms.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Personal data may also be disclosed where required by law or where
                     reasonably necessary to protect the security of the application or its
                     users.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     7. Data retention
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Because Transcenagochi is an educational project, personal data is
                     retained only for as long as necessary to operate, test, and evaluate
                     the project.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Account and profile data will normally be retained while the relevant
                     account exists or until the project environment is dismantled.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Technical logs are retained only for as long as reasonably necessary
                     for security and debugging.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     When personal data is no longer required, we delete or anonymise it
                     where reasonably possible.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     8. Security
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     We take reasonable technical measures to protect the information
                     processed by the application.
                 </p>
 
-                <p className="mb-2">These may include:</p>
+                <p>These may include:</p>
 
                 <ul className="list-disc ml-4 mb-2">
                     <li>access controls;</li>
@@ -319,23 +319,23 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     However, Transcenagochi is a student project and should not be treated as
                     a production service for storing confidential or highly sensitive
                     information.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     No internet-based system can guarantee complete security.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     9. Your rights
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     If the GDPR applies to the processing of your personal data, you may
                     have the right to:
                 </p>
@@ -351,76 +351,76 @@ export default function PrivacyPolicy() {
                     <li>withdraw consent where processing is based on consent.</li>
                 </ul>
 
-                <p className="mb-2">
+                <p>
                     To exercise these rights, contact:
                     <strong> transcenagochi@proton.me</strong>
                 </p>
 
-                <p className="mb-2">
+                <p>
                     We may need to verify your identity before fulfilling a request.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     You may also have the right to lodge a complaint with the relevant
                     national data protection authority.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     10. Children
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     This application was created as an educational project and is not
                     specifically designed or marketed as a service for children.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     Users should not provide personal information about children through the
                     application.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     11. Third-party services
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Some functionality may rely on third-party technologies or services.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     For example, if the project supports authentication through an external
                     provider, that provider may process information independently according
                     to its own privacy policy.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     This Privacy Policy applies only to personal data processed directly by
                     Transcenagochi.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     12. Changes to this Privacy Policy
                 </h2>
 
-                <p className="mb-2">
+                <p>
                     Because this application is under active development as a school project,
                     its features and data processing practices may change.
                 </p>
 
-                <p className="mb-2">
+                <p>
                     We will update this Privacy Policy when material changes are made to how
                     personal data is processed. The date at the top of this page indicates
                     when the policy was last updated.
                 </p>
             </section>
 
-            <section>
+            <section className="space-y-2">
                 <h2 className="font-bold mt-4 mb-4 border-b-2 text-2xl">
                     13. Contact
                 </h2>
@@ -430,7 +430,7 @@ export default function PrivacyPolicy() {
                     Email: transcenagochi@proton.me
                 </address>
 
-                <p className="mb-2">
+                <p>
                     Transcenagochi is a student project created as part of the 42 curriculum
                     and is not an official service of 42.
                 </p>
