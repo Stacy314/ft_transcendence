@@ -12,7 +12,13 @@ export default function HeaderFooter() {
         <Outlet />
       </div>
 
-      <footer>© Transcengotchi</footer>
+      <footer className="site-footer">
+        <span>© Transcengotchi</span>
+        <nav aria-label="Legal">
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms of Service</Link>
+        </nav>
+      </footer>
     </div>
   );
 }
