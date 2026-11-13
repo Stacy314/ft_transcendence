@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 76" fill="none">
+  <title>Transcengochi</title>
+  <rect x="4" y="8" width="60" height="60" rx="20" fill="#dcc29d" stroke="#755538" stroke-width="3"/>
+  <rect x="13" y="17" width="42" height="34" rx="10" fill="#ecd9b7"/>
+  <path d="M22 31V24L29 28H39L46 24V37C46 44 22 44 22 37V31Z" fill="#bfa079" stroke="#755538" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M28 34V36M40 34V36M32 39L34 40L36 39" stroke="#59412d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="59" r="2.5" fill="#96724d"/>
+  <circle cx="34" cy="59" r="2.5" fill="#96724d"/>
+  <circle cx="44" cy="59" r="2.5" fill="#96724d"/>
+  <!-- Rounded hand-drawn lettering, independent of installed fonts. -->
+  <g stroke="#59412d" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(80 23) rotate(-5 10 18)"><path d="M0 2Q10 -1 21 2M11 2L9 31"/></g>
+    <g transform="translate(103.5 25) rotate(3 10 18)"><path d="M2 31L2 12M2 20Q8 9 17 14"/></g>
+    <g transform="translate(127 23) rotate(-3 10 18)"><path d="M17 17C14 9 1 13 1 24C1 35 16 33 17 23M18 13L18 31"/></g>
+    <g transform="translate(150.5 25) rotate(4 10 18)"><path d="M1 31L1 13M1 20C7 9 18 11 18 23L18 31"/></g>
+    <g transform="translate(174 22) rotate(-4 10 18)"><path d="M17 15C7 8 -3 18 8 22C24 26 12 37 1 29"/></g>
+    <g transform="translate(197.5 24) rotate(2 10 18)"><path d="M17 15C6 6 -3 19 2 28C6 35 14 32 18 29"/></g>
+    <g transform="translate(221 22) rotate(-3 10 18)"><path d="M1 23L18 21C18 9 2 9 1 23C0 35 13 35 18 29"/></g>
+    <g transform="translate(244.5 25) rotate(3 10 18)"><path d="M1 31L1 13M1 20C7 9 18 11 18 23L18 31"/></g>
+    <g transform="translate(268 23) rotate(-4 10 18)"><path d="M18 17C10 7 -1 15 1 25C3 37 18 33 18 22M18 13L18 36Q18 47 4 41"/></g>
+    <g transform="translate(291.5 24) rotate(4 10 18)"><path d="M18 21C18 7 0 9 1 23C2 37 20 35 18 21Z"/></g>
+    <g transform="translate(315 22) rotate(-2 10 18)"><path d="M17 15C6 6 -3 19 2 28C6 35 14 32 18 29"/></g>
+    <g transform="translate(338.5 23) rotate(3 10 18)"><path d="M1 31L1 0M1 20C9 8 18 12 18 23L18 31"/></g>
+    <g transform="translate(362 23) rotate(-4 10 18)"><path d="M7 14L6 31"/><circle cx="7" cy="5" r="3" fill="#59412d" stroke="none"/></g>
+  </g>
+  <path d="M373 13V21M369 17H377" stroke="#96724d" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

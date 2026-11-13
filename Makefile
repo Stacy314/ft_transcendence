@@ -2,7 +2,9 @@
 
 COMPOSE = docker compose
 
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL := all
+
+SERVICE ?=
 
 .PHONY: help build up down rebuild logs ps \
         generate db-migrate db-rollback db-seed db-reset \
@@ -29,25 +31,36 @@ fe-build: ## build the frontend production bundle into frontend/dist
 fe-clean: ## remove frontend node_modules, dist and the Vite cache
 	rm -rf frontend/node_modules frontend/dist frontend/.vite
 
+## --- project ---
+
+all: up ## start the whole project (same as make up)
+
+env: ## create .env from .env.example if it does not exist yet
+	@test -f .env || { cp .env.example .env && echo "Created .env from .env.example - fill in the values, then run make again"; }
+
 ## --- containers ---
 
 build: ## build the backend image
-	$(COMPOSE) build backend
+	$(COMPOSE) build $(SERVICE)
 
 up: ## start db + backend in the background
-	$(COMPOSE) up -d
+	$(COMPOSE) up -d --build
 
 down: ## stop and remove containers
 	$(COMPOSE) down
 
-rebuild: build ## rebuild the backend image and restart it (needed after editing files in backend/)
-	$(COMPOSE) up -d --force-recreate backend
+restart: ## restart without rebuilding (all, or one: make restart SERVICE=frontend)
+	$(COMPOSE) restart $(SERVICE)
+	
+rebuild: build ## rebuild rebuild from scratch and restart  
+	$(COMPOSE) build --no-cache $(SERVICE)
+	$(COMPOSE) up -d --force-recreate --renew-anon-volumes $(SERVICE)
 
 logs: ## follow backend logs
-	$(COMPOSE) logs -f backend
+	$(COMPOSE) logs -f  $(SERVICE)
 
 ps: ## show container status
-	$(COMPOSE) ps
+	$(COMPOSE) ps -a
 
 ## --- database ---
 
