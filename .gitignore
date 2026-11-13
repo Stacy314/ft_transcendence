@@ -63,6 +63,16 @@ dkms.conf
 .DS_Store
 
 backend/config/master.key
+
+# Rails runtime files
+/backend/log/*
+!/backend/log/.keep
+/backend/tmp/*
+!/backend/tmp/.keep
+!/backend/tmp/pids/
+!/backend/tmp/pids/.keep
+!/backend/tmp/storage/
+!/backend/tmp/storage/.keep
 /backend/tmp/cache/
 /backend/log/
 /backend/tmp/local_secret.txt
