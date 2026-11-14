@@ -42,10 +42,43 @@
   gap: 0.6rem;
 }
 
-.dashboard-stats div {
+.dashboard-stat-label {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  margin-bottom: 0.4rem;
+  color: #514535;
+}
+
+.dashboard-stat-hunger { --stat-color: #f58b68; }
+.dashboard-stat-health { --stat-color: #87c96b; }
+.dashboard-stat-energy { --stat-color: #7b9fed; }
+
+
+.dashboard-stat progress {
+  display: block;
+  width: 100%;
+  height: 14px;
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #faf3e8;
+}
+
+.dashboard-stat progress::-webkit-progress-bar {
+  background: #faf3e8;
+  border-radius: 999px;
+}
+
+.dashboard-stat progress::-webkit-progress-value {
+  background: var(--stat-color);
+  border-radius: 999px;
+}
+
+.dashboard-stat progress::-moz-progress-bar {
+  background: var(--stat-color);
+  border-radius: 999px;
 }
 
 .dashboard-actions {
@@ -61,6 +94,23 @@
   background: #7ec8f2;
   color: #0b3b57;
   font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.dashboard-actions button:hover {
+  background: #a5dcfa;
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-actions button {
+    transition: none;
+  }
+
+  .dashboard-actions button:hover {
+    transform: none;
+  }
 }
 
 .dashboard-pet img {

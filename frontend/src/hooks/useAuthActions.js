@@ -36,9 +36,8 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: logout,
-    // onSettled: clear local data even if the request failed, so the UI
-    // never keeps showing a user who asked to log out
-    onSettled: () => {
+    // Clear local data after the server confirms the session was ended.
+    onSuccess: () => {
       switchUser(queryClient, null);
       navigate('/login', { replace: true });
     },
