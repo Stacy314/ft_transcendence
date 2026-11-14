@@ -38,6 +38,18 @@
   height: auto;
 }
 
+.site-account-nav {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.site-profile {
+  text-decoration: none;
+}
+
+.site-profile,
 .site-logout {
   padding: .75rem 1.2rem;
   border: 1px solid #b99970;
@@ -46,6 +58,7 @@
   color: #514535;
   font: inherit;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .site-logout:disabled {
@@ -75,4 +88,18 @@
 
 .site-footer a {
   text-decoration: underline;
+}
+
+.site-profile:hover,
+.site-logout:hover:enabled {
+  background: #c9aa7d;
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-profile,
+  .site-logout {
+    transition: none;
+    transform: none;
+  }
 }

@@ -17,7 +17,10 @@ export default function HeaderFooter() {
           <img src={logo} alt="Transcengochi" width="390" height="76" />
         </Link>
         {isLoggedIn && (
-          <button className="site-logout" type="button" disabled={logout.isPending} onClick={() => logout.mutate()}>Logout</button>
+          <nav className="site-account-nav" aria-label="Account">
+            <Link className="site-profile" to="/profile">Profile</Link>
+            <button className="site-logout" type="button" disabled={logout.isPending} onClick={() => logout.mutate()}>Logout</button>
+          </nav>
         )}
       </header>
       {logout.isError && <p className="site-logout-error" role="alert">{getApiError(logout.error).message}</p>}
