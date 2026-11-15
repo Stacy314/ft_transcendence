@@ -1,4 +1,5 @@
 import './style.css';
+import cozyRoom from '../../assets/gotchi-cozy-room.png';
 import { GOTCHIS } from '../gotchi_selection/gotchis.js';
 import { Navigate } from 'react-router-dom';
 import { usePet } from '../../hooks/usePet';
@@ -41,13 +42,26 @@ export default function Dashboard() {
   const type = GOTCHIS.find((g) => g.id === gotchi.species);
 
   return (
-    <main className="dashboard-page">
-      <div className="dashboard-title">{gotchi.name || 'Your Gotchi'}</div>
+    <main className="dashboard-page" aria-labelledby="dashboard-gotchi-name">
       <div className="dashboard-card">
-        <div className="dashboard-pet" aria-label="virtual pet">
-          {type?.image
-            ? <img src={type.image} alt={type.label} />
-            : <span className="dashboard-placeholder">?</span>}
+        <header className="dashboard-heading">
+          <h1 className="dashboard-title" id="dashboard-gotchi-name">
+            {gotchi.name || 'Your Gotchi'}
+          </h1>
+        </header>
+        <div className="dashboard-scene" role="group" aria-label="Gotchi play area in a cozy room">
+          <img
+            className="dashboard-scene-background"
+            src={cozyRoom}
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+          />
+          <div className="dashboard-pet">
+            {type?.image
+              ? <img src={type.image} alt={type.label} />
+              : <span className="dashboard-placeholder">?</span>}
+          </div>
         </div>
         <div className="dashboard-stats">
           <StatBar name="Hunger" value={gotchi.hunger} />
