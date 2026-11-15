@@ -164,8 +164,12 @@
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.dashboard-actions button:hover {
+.dashboard-actions button:hover,
+.dashboard-actions button[data-playing='true'] {
   background: #a5dcfa;
+}
+
+.dashboard-actions button:hover {
   transform: translateY(-2px);
 }
 
