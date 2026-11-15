@@ -1,4 +1,5 @@
 import './style.css';
+import CatSprite from '../../components/CatSprite.jsx';
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { GOTCHIS } from './gotchis.js';
@@ -48,7 +49,7 @@ export default function GotchiSelection() {
               <div className="gotchi-card" aria-live="polite">
                 <span className="gotchi-image">
                   {current.image
-                    ? <img src={current.image} alt={current.label} />
+                    ? <CatSprite image={current.image} label={current.label} species={current.id} />
                     : <span className="gotchi-placeholder">?</span>}
                 </span>
                 <span>{current.label}</span>

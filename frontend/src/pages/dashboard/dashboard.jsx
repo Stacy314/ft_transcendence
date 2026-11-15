@@ -1,5 +1,6 @@
 import './style.css';
 import cozyRoom from '../../assets/gotchi-cozy-room.png';
+import CatSprite from '../../components/CatSprite.jsx';
 import { GOTCHIS } from '../gotchi_selection/gotchis.js';
 import { Navigate } from 'react-router-dom';
 import { usePet } from '../../hooks/usePet';
@@ -59,7 +60,7 @@ export default function Dashboard() {
           />
           <div className="dashboard-pet">
             {type?.image
-              ? <img src={type.image} alt={type.label} />
+              ? <CatSprite className="dashboard-pet-image" image={type.image} label={type.label} species={type.id} />
               : <span className="dashboard-placeholder">?</span>}
           </div>
         </div>

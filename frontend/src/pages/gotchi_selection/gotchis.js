@@ -1,3 +1,4 @@
+import '../../assets/cat-idle.css';
 import cat1 from '../../assets/Cat1.png';
 import cat2 from '../../assets/Cat2.png';
 

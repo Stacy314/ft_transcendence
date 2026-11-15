@@ -1,16 +1,100 @@
-.dashboard-pet-image,
-.gotchi-image img {
-  transform-origin: 50% 90%;
-  animation: cat-idle 3.6s ease-in-out infinite;
+.cat-sprite {
+  --cat-idle-duration: 2.8s;
+  --cat-head-animation: cat-head-idle;
+  --cat-tail-animation: cat-tail-idle;
+  --cat-tail-duration: 2.8s;
+  --cat-ear-duration: 5.6s;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: visible;
+  image-rendering: pixelated;
 }
 
-@keyframes cat-idle {
-  0%, 100% {
-    transform: translateY(0) rotate(-0.6deg) scale(1);
-  }
-  50% {
-    transform: translateY(-3px) rotate(0.6deg) scale(1.015, 1.025);
-  }
+.dashboard-pet-image {
+  transform-origin: 50% 86%;
+}
+
+.cat-sprite[data-species='cat-2'] {
+  --cat-idle-duration: 4s;
+  --cat-head-animation: none;
+  --cat-body-animation: cat-sleep-body;
+  --cat-tail-animation: cat-sleep-tail;
+  --cat-tail-duration: 8s;
+  --cat-ear-duration: 8s;
+}
+
+.cat-sprite-head {
+  animation: var(--cat-head-animation) var(--cat-idle-duration) steps(1, end) infinite;
+}
+
+.cat-sprite-body {
+  animation: var(--cat-body-animation, none) var(--cat-idle-duration) steps(1, end) infinite;
+}
+
+.cat-sprite-tail {
+  animation: var(--cat-tail-animation) var(--cat-tail-duration) steps(1, end) infinite;
+}
+
+.cat-sprite-ear {
+  animation: cat-ear-idle var(--cat-ear-duration) steps(1, end) infinite;
+}
+
+.cat-sprite-eyes-open {
+  animation: cat-eyes-open 5.6s steps(1, end) infinite;
+}
+
+.cat-sprite-eyes-closed {
+  opacity: 0;
+  animation: cat-eyes-closed 5.6s steps(1, end) infinite;
+}
+
+.cat-sprite-sleep-symbol {
+  animation: cat-sleep-symbol 4s steps(1, end) infinite;
+}
+
+@keyframes cat-head-idle {
+  0%, 20%, 55%, 100% { transform: translate(0, 0); }
+  30%, 45%, 75%, 85% { transform: translate(0, 1px); }
+}
+
+@keyframes cat-tail-idle {
+  0%, 20%, 60%, 100% { transform: translate(0, 0); }
+  30%, 45% { transform: translate(1px, 0); }
+  75%, 85% { transform: translate(-1px, 0); }
+}
+
+@keyframes cat-ear-idle {
+  0%, 60%, 68%, 100% { transform: translate(0, 0); }
+  62%, 65% { transform: translate(0, 1px); }
+}
+
+@keyframes cat-eyes-open {
+  0%, 72%, 78%, 100% { opacity: 1; }
+  74%, 76% { opacity: 0; }
+}
+
+@keyframes cat-eyes-closed {
+  0%, 72%, 78%, 100% { opacity: 0; }
+  74%, 76% { opacity: 1; }
+}
+
+@keyframes cat-sleep-body {
+  0%, 20%, 80%, 100% { transform: translate(0, 0); }
+  35%, 65% { transform: translate(0, -1px); }
+}
+
+@keyframes cat-sleep-tail {
+  0%, 65%, 90%, 100% { transform: translate(0, 0); }
+  70%, 80% { transform: translate(1px, 0); }
+}
+
+@keyframes cat-sleep-symbol {
+  0%, 20%, 100% { opacity: 1; transform: translate(0, 0); }
+  35% { opacity: 1; transform: translate(-1px, -1px); }
+  50% { opacity: 1; transform: translate(-1px, -2px); }
+  70% { opacity: 0; transform: translate(-1px, -2px); }
+  85% { opacity: 0; transform: translate(0, 0); }
 }
 
 .dashboard-pet-image[data-action='feed'] {
@@ -157,7 +241,7 @@
   .dashboard-pet-image,
   .dashboard-pet-image[data-action],
   .dashboard-food-bowl[data-feeding='true'],
-  .gotchi-image img {
+  .cat-sprite .cat-sprite-part {
     animation: none;
   }
 
