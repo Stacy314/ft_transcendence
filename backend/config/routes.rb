@@ -3,7 +3,11 @@ Rails.application.routes.draw do
     get "csrf", to: "csrf#show"
     post "registration", to: "registrations#create"
     resource :session, only: %i[create destroy show]
-    resource :pet, only: %i[show create]
+    resource :pet, only: %i[show create] do
+      patch :feed
+      patch :play
+      patch :clean
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
