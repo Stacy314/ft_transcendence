@@ -1,4 +1,3 @@
-// Client-side validation for the login and register forms.
 // Keep these rules in sync with backend/app/models/user.rb:
 // the backend validates again, the frontend only gives faster feedback.
 export const USERNAME_MIN = 3;
@@ -7,7 +6,6 @@ export const USERNAME_PATTERN = /^[a-zA-Z0-9_]+$/;
 export const PASSWORD_MIN = 8;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Returns { fieldName: 'message' } for every invalid field; {} when all is fine.
 export function validateLogin({ username, password }) {
   const errors = {};
   if (!username.trim()) errors.username = 'Please enter your username.';
@@ -53,13 +51,25 @@ export function validateRegister({
   return errors;
 }
 
-// The backend names fields in snake_case; the form uses camelCase.
-// Turns { password_confirmation: ['...'] } into { passwordConfirmation: '...' }.
-export function serverFieldErrors(fields = {}) {
-  const errors = {};
+export function getServerFormErrors(fields, submittedValues, fallbackMessage) {
+  const fieldErrors = {};
+  const generalMessages = [];
+
   for (const [key, messages] of Object.entries(fields)) {
+    // Rails uses snake_case; match its field names to the submitted form values.
     const field = key.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
-    errors[field] = Array.isArray(messages) ? messages[0] : String(messages);
+    const message = Array.isArray(messages) ? messages[0] : messages;
+    if (typeof message !== 'string' || !message.trim()) continue;
+
+    if (Object.hasOwn(submittedValues, field)) {
+      fieldErrors[field] = message;
+    } else {
+      generalMessages.push(message);
+    }
   }
-  return errors;
+
+  const formError =
+    generalMessages.join(' ') ||
+    (Object.keys(fieldErrors).length === 0 ? fallbackMessage : '');
+  return { fieldErrors, formError };
 }

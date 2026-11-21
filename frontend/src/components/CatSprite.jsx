@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import '../assets/cat-idle.css';
 
 const SPRITE_GROUND_Y = 55;
 

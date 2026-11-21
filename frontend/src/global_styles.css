@@ -27,6 +27,12 @@ body {
   image-rendering: pixelated;
 }
 
-button {
-  cursor: pointer;
+@layer base {
+  #root {
+    @apply min-h-screen w-full;
+  }
+
+  button {
+    cursor: pointer;
+  }
 }

@@ -1,11 +1,9 @@
 import { QueryClient } from '@tanstack/react-query';
 
-// TanStack Query keeps server data (pet, profile, friends...) cached,
-// refetches it when needed and exposes isLoading / error to components.
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 30 * 1000, // data counts as fresh for 30 s
+      staleTime: 30 * 1000,
       refetchOnWindowFocus: false,
       retry: (failureCount, error) => {
         // Retrying cannot fix these: not logged in, forbidden, not found

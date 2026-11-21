@@ -1,81 +1,25 @@
 .dashboard-page {
-  align-self: center;
-  width: min(34rem, 92vw);
-  min-width: 0;
-  display: grid;
-  padding-block: 1.5rem;
   font-family: sans-serif;
   color: #514535;
 }
 
 .dashboard-card {
-  width: 100%;
-  min-width: 0;
-  display: grid;
-  gap: 1rem;
   padding: 1.75rem clamp(1rem, 4vw, 1.5rem) 1.5rem;
-  border: 1px solid #c89b5a;
-  border-radius: 44% 44% 36% 36% / 15% 15% 12% 12%;
-  background: var(--panel-background);
-  box-shadow: inset 0 3px 0 #fff5dd99, 0 8px 0 #c69a5c, 0 16px 28px #6e4c2b26;
-}
-
-.dashboard-heading {
-  display: grid;
-  justify-items: center;
-  min-width: 0;
-  padding-inline: 1.25rem;
 }
 
 .dashboard-title {
-  max-width: 100%;
-  margin: 0;
-  padding: 0.5rem 1.5rem 0.65rem;
-  border-radius: 50% 50% 42% 42% / 45% 45% 55% 55%;
-  background: #fff3da;
-  color: #59412d;
-  box-shadow: 0 3px 0 #b88c5140;
   font-size: clamp(1.65rem, 5.5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.15;
-  text-align: center;
-  overflow-wrap: anywhere;
 }
 
 .dashboard-scene {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 4px solid #fff3da;
-  border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
-  background-color: #e5cfac;
-  box-shadow: 0 3px 0 #b88c5140;
-}
-
-.dashboard-scene-background {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
+  background: #e5cfac;
 }
 
 .dashboard-pet {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  bottom: 8%;
-  display: grid;
-  place-items: center;
   width: clamp(6.075rem, 32.4%, 10.125rem);
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  font-size: 5rem;
 }
 
+/* Anchor the shadow to the sprite container so it stays under the cat during animations. */
 .dashboard-pet::before {
   content: '';
   position: absolute;
@@ -87,121 +31,33 @@
   background: radial-gradient(ellipse, #59412d45, transparent 70%);
 }
 
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-inline: 0.5rem;
-  padding: 0.75rem;
-  border-radius: 1.5rem;
-  background: #fff3da80;
-}
-
 .dashboard-stat-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   gap: 0.15rem;
   margin-bottom: 0.35rem;
-  color: #514535;
   font-size: 0.75rem;
 }
 
-.dashboard-stat-label strong {
-  font-size: 1rem;
-}
-
-.dashboard-stat-hunger { --stat-color: #f58b68; }
-.dashboard-stat-health { --stat-color: #87c96b; }
-.dashboard-stat-energy { --stat-color: #7b9fed; }
-
-
-.dashboard-stat progress {
-  display: block;
-  width: 100%;
-  height: 8px;
-  appearance: none;
-  border: none;
-  border-radius: 999px;
-  overflow: hidden;
+.dashboard-stat-progress {
   background: #faf3e8;
 }
 
-.dashboard-stat progress::-webkit-progress-bar {
+/* Browsers expose different pseudo-elements for the native progress bar. */
+.dashboard-stat-progress::-webkit-progress-bar {
   background: #faf3e8;
   border-radius: 999px;
 }
 
-.dashboard-stat progress::-webkit-progress-value {
+.dashboard-stat-progress::-webkit-progress-value {
   background: var(--stat-color);
   border-radius: 999px;
 }
 
-.dashboard-stat progress::-moz-progress-bar {
+.dashboard-stat-progress::-moz-progress-bar {
   background: var(--stat-color);
   border-radius: 999px;
 }
 
-.dashboard-actions {
-  display: flex;
-  justify-content: center;
-  gap: clamp(1rem, 5vw, 2rem);
-  padding-bottom: 0.25rem;
-}
-
-.dashboard-actions button {
+.dashboard-care-button {
   width: clamp(3.5rem, 12vw, 4rem);
-  aspect-ratio: 1;
-  border: 2px solid #6ab0d8;
-  border-radius: 50%;
-  background: #7ec8f2;
-  color: #0b3b57;
-  box-shadow: inset 0 2px 0 #ffffff66, 0 4px 0 #5b98bc;
   font-size: 0.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.dashboard-actions button:hover,
-.dashboard-actions button[data-playing='true'] {
-  background: #a5dcfa;
-}
-
-.dashboard-actions button:hover {
-  transform: translateY(-2px);
-}
-
-.dashboard-actions button:active {
-  transform: translateY(2px);
-  box-shadow: inset 0 2px 0 #ffffff66, 0 2px 0 #5b98bc;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dashboard-actions button {
-    transition: none;
-  }
-
-  .dashboard-actions button:hover,
-  .dashboard-actions button:active {
-    transform: none;
-  }
-}
-
-.dashboard-pet-image {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;
-}
-
-.dashboard-placeholder {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border: 2px dashed #fff;
-  border-radius: 8px;
 }

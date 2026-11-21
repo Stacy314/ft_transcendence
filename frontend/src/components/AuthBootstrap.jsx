@@ -4,12 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useMe, switchUser } from '../hooks/useMe';
 import { PUBLIC_PATHS, setUnauthorizedHandler } from '../services/api';
 
-// Wraps the routes. On app start it:
-//   1. asks the backend who is logged in (useMe), showing a loader meanwhile,
-//      so pages never flash "logged out" for a logged-in user;
-//   2. tells the API client how to react to an expired session (401):
-//      forget the user and go to /login without reloading the page.
-// Must be rendered inside the router (it uses useNavigate).
 export default function AuthBootstrap({ children }) {
   const { isPending } = useMe();
   const navigate = useNavigate();
@@ -26,6 +20,7 @@ export default function AuthBootstrap({ children }) {
     });
   }, [navigate, location, queryClient]);
 
+  // Wait for the session check to avoid a flash of the signed-out view.
   if (isPending) {
     return (
       <div
