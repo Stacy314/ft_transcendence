@@ -1,4 +1,12 @@
-import avatar from '../../assets/pastel_avatar_1.png';
+import avatar from '../../assets/pastel_avatar_2.png';
+import Button from '../../components/ui/Button.jsx';
+import Input from '../../components/ui/Input.jsx';
+import Card from '../../components/ui/Card.jsx';
+import Avatar from '../../components/ui/Avatar.jsx';
+import Toast from '../../components/ui/Toast.jsx';
+import Modal from '../../components/ui/Modal.jsx';
+import CameraIcon from '../../components/icons/CameraIcon.jsx';
+
 import { useState, useRef } from 'react';
 
 export default function Profile() {
@@ -33,6 +41,7 @@ export default function Profile() {
     const [successMessage, setSuccessMessage] = useState("");
     const avatarInputRef = useRef(null);
     const [draftAvatar, setDraftAvatar] = useState(null);
+    const [isAvatarEditing, setIsAvatarEditing] = useState(false);
     const [avatarError, setAvatarError] = useState("");
 
     function handleSave(event) {
@@ -111,6 +120,8 @@ export default function Profile() {
             setDraftAvatar(null);
             setAvatarError("");
             avatarInputRef.current.value = "";
+            setIsAvatarEditing(false);
+            setSuccessMessage("Avatar updated.");
         } catch {
             setAvatarError("Could not save your avatar. Try a smaller image.");
         }
@@ -121,197 +132,213 @@ export default function Profile() {
         setDraftAvatar(null);
         setAvatarError("");
         avatarInputRef.current.value = "";
+        setIsAvatarEditing(false);
+    }
+
+    function handleCancelEdit() {
+        setDraftName(user.name);
+        setDraftUsername(user.username);
+        setDraftEmail(user.email);
+        setUsernameError("");
+        setNameError("");
+        setIsEditing(false);
     }
 
     return (
         <main className="mx-auto w-full max-w-5xl p-6">
-            <div className="flex md:flex-row flex-col gap-6 bg-white rounded-2xl p-5 shadow-sm md-flex-row text-black">
-                <section className="flex flex-col items-center gap-3 rounded-xl bg-lime-100 p-6 md:w-1/3">
-                                        <div className="relative">
-                        <img
-                        className="h-42 w-42 rounded-full object-cover border-6 border-white"
-                        src={draftAvatar ?? user.avatar}
-                        alt="Avatar"
-                        />
-                        <input 
-                            ref={avatarInputRef}
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            onChange={handleAvatarSelection}
-                            hidden
-                        />
-                        <button
-                            type="button"
-                            aria-label="Change avatar"
-                            title="Change avatar"
-                            className="absolute bottom-1 right-1 rounded-full border-2 border-white bg-gray-400 p-3 text-white shadow-md transition-colors hover:bg-gray-600 focus-visible:outline-2 focus-visible:outline-gray-700"
-                            onClick={() => avatarInputRef.current.click()}
-                        >
-                            <svg
-                                aria-hidden="true"
-                                viewBox="0 0 24 24"
-                                className="h-6 w-6"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3l-1.5-2Z"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                        </button>
-                    </div>
+            <Card>
+                <div className="flex md:flex-row flex-col gap-6 md-flex-row">
+                    <section className="flex flex-col items-center gap-3 rounded-xl bg-surface-tinted p-6 md:w-1/3">
+                                            <div className="relative">
+                            <Avatar
+                            src={user.avatar}
+                            alt="Your profile picture"
+                            size="lg"
+                            />
 
-                    {avatarError && (
-                        <p role="alert" className="text-center text-sm text-red-600">
-                            {avatarError}
-                        </p>
-                    )}
-
-                    {draftAvatar !== null && (
-                        <div className="flex gap-2">
                             <button
                                 type="button"
-                                onClick={handleAvatarSave}
-                                className="rounded-lg bg-lime-600 px-3 py-2 text-sm text-white font-semibold hover:bg-lime-700"
+                                aria-label="Change avatar"
+                                title="Change avatar"
+                                className="absolute bottom-1 right-1 rounded-full border-2 border-white bg-primary p-3 text-on-primary shadow-md transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-focus"
+                                onClick={() => setIsAvatarEditing(true)}
                             >
-                                Save
+                                <CameraIcon/>
                             </button>
-                            <button
-                                type="button"
-                                onClick={handleAvatarCancel}
-                                className="rounded-lg bg-orange-500 px-3 py-2 text-sm text-white font-semibold hover:bg-orange-600"
-                            >
-                                Cancel
-                            </button>
+                            <Modal
+                                title="Change avatar"
+                                isOpen={isAvatarEditing}
+                                onClose={handleAvatarCancel}
+                                >
+                                    <Avatar
+                                        src={draftAvatar ?? user.avatar}
+                                        alt="Avatar preview"
+                                        size="lg"
+                                    />
+                                    <input 
+                                        ref={avatarInputRef}
+                                        type="file"
+                                        accept="image/png, image/jpeg"
+                                        onChange={handleAvatarSelection}
+                                        hidden
+                                    />
+                                    <Button
+                                        type="button"
+                                        onClick={() => avatarInputRef.current.click()}
+                                    >
+                                        Choose image
+                                    </Button>
+                                    {avatarError && (
+                                        <p role="alert" className="text-center text-sm text-error">
+                                            {avatarError}
+                                        </p>
+                                    )}
+                                    {draftAvatar !== null && (
+                                        <div className="flex gap-2">
+                                            <Button
+                                                variant="primary"
+                                                type="button"
+                                                onClick={handleAvatarSave}
+                                            >
+                                                Save
+                                            </Button>
+                                            <Button
+                                                variant="secondary"
+                                                type="button"
+                                                onClick={handleAvatarCancel}
+                                                className="rounded-lg bg-secondary px-3 py-2 text-sm text-on-secondary font-semibold hover:bg-secondary-hover"
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </div>
+                                    )}
+                            </Modal>
                         </div>
-                    )}
-                    <h1 className="text-4xl font-bold">
-                        {user.username}
-                    </h1>
-                    <p className="text-center text-sm text-gray-600">
-                        Member since {user.joined}
-                    </p>
 
-                    <button
-                        type="button"
-                        disabled={isEditing}
-                        className="rounded-lg bg-lime-600 px-6 py-2 text-white font-semibold hover:bg-lime-700 hover:shadow-xl focus-visible:outline-2 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-                        onClick={() => {
-                                setDraftName(user.name);
-                                setDraftUsername(user.username);
-                                setDraftEmail(user.email);
-                                setNameError("");
-                                setUsernameError("");
-                                setSuccessMessage("");
-                                setIsEditing(true);
-                        }}
-                    >
-                        Edit profile
-                    </button>
-
-                </section>
-
-            <section className="min-w-0 flex-1 p-4">
-                <h2 className="mb-6 text-2xl font-bold border-b-2 border-b-black pb-3">
-                    Account details
-                </h2>
-                {!isEditing && (
-                <dl className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 gap-y-4 text-lg">
-
-                    <dt className="text-gray-600">Username</dt>
-                    <dd className="font-semibold">{user.username}</dd>
-
-                    <dt className="text-gray-600">Name</dt>
-                    <dd className="font-semibold">{user.name}</dd>
-
-                    <dt className="text-gray-600">Email</dt>
-                    <dd className="font-semibold wrap-break-word">{user.email}</dd>
-                </dl>
-                )}
-                <p role="status" className="mt-4 text-sm text-green-700">
-                    {successMessage}
-                </p>
-                {isEditing && (
-                <form onSubmit={handleSave}
-                    className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 gap-y-4 text-lg">
-                    
-                    <label htmlFor="username" className="mb-2 block font-medium">
-                        Username
-                    </label>
-                    
-                    <input 
-                        id="username"
-                        type="text"
-                        value={draftUsername}
-                        onChange={(event) => setDraftUsername(event.target.value)}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                        aria-invalid={usernameError !== ""}
-                        aria-describedby={usernameError ? "username-error" : undefined}    
-                    />
-                    {
-                        usernameError && (
-                            <p id="username-error" role="alert" className="col-start-2 text-sm text-red-600">
-                                {usernameError}
-                            </p>
-                    )}
-                    <label className="mb-2 block font-medium" htmlFor="name">
-                        Name
-                    </label>
-
-                    <input
-                        id="name"
-                        type="text"
-                        value={draftName}
-                        onChange={(event) => setDraftName(event.target.value)}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-200"
-                        aria-invalid={nameError !== ""}
-                        aria-describedby={nameError ? "name-error" : undefined}
-                    />
-                    {nameError && (
-                        <p id="name-error" role="alert" className="col-start-2 text-sm text-red-600">
-                            {nameError}
+                        <h1 className="text-4xl font-bold">
+                            {user.username}
+                        </h1>
+                        <p className="text-center text-sm text-muted mb-6">
+                            Member since {user.joined}
                         </p>
-                    )}
 
-                    <label className="mb-2 block font-medium" htmlFor="email">
-                        Email
-                    </label>
-
-                    <input
-                        id="email"
-                        type="email"
-                        required
-                        value={draftEmail}
-                        onChange={(event) => setDraftEmail(event.target.value)}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-200"
-                    />
-
-                    <div className="col-span-2 mt-4 flex justify-end gap-3 text-sm">
-                        <button
-                        type="submit"
-                        disabled={!hasProfileChanged}
-                        className="rounded-lg bg-lime-600 px-4 py-2 font-semibold text-white hover:bg-lime-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        <Button
+                            variant="primary"
+                            type="button"
+                            onClick={() => {
+                                    setDraftName(user.name);
+                                    setDraftUsername(user.username);
+                                    setDraftEmail(user.email);
+                                    setNameError("");
+                                    setUsernameError("");
+                                    setSuccessMessage("");
+                                    setIsEditing(true);
+                            }}
                         >
-                        Save changes
-                        </button>
-                        <button type="button"
-                            className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
-                            onClick={()=> {
-                                setDraftName(user.name);
-                                setDraftUsername(user.username);
-                                setDraftEmail(user.email);
-                                setUsernameError("");
-                                setNameError("");
-                                setIsEditing(false)}}>
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-                )}
-            </section>
-            </div>
+                            Edit profile
+                        </Button>
+
+                    </section>
+
+                <section className="min-w-0 flex-1 p-4">
+                    <h2 className="mb-6 text-2xl font-bold border-b-2 border-b-gray-400 pb-3">
+                        Account details
+                    </h2>
+                    
+                    {!isEditing && (
+                    <dl className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 gap-y-4 text-lg">
+
+                        <dt className="text-muted">Username</dt>
+                        <dd className="font-semibold">{user.username}</dd>
+
+                        <dt className="text-muted">Name</dt>
+                        <dd className="font-semibold">{user.name}</dd>
+
+                        <dt className="text-muted">Email</dt>
+                        <dd className="font-semibold wrap-break-word">{user.email}</dd>
+                    </dl>
+                
+                    )}
+                    <Toast onDismiss={() => setSuccessMessage("")}>
+                        {successMessage}
+                    </Toast>
+                </section>
+                <Modal
+                    title="Edit profile"
+                    isOpen={isEditing}
+                    onClose={handleCancelEdit}
+                    >
+                    <form onSubmit={handleSave}
+                        className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 gap-y-4 text-lg">
+                        
+                        <label htmlFor="username" className="mb-2 block font-medium">
+                            Username
+                        </label>
+                        
+                        <Input 
+                            id="username"
+                            type="text"
+                            value={draftUsername}
+                            onChange={(event) => setDraftUsername(event.target.value)}
+                            aria-invalid={usernameError !== ""}
+                            aria-describedby={usernameError ? "username-error" : undefined}    
+                        />
+                        {
+                            usernameError && (
+                                <p id="username-error" role="alert" className="col-start-2 text-sm text-error">
+                                    {usernameError}
+                                </p>
+                        )}
+                        <label className="mb-2 block font-medium" htmlFor="name">
+                            Name
+                        </label>
+
+                        <Input
+                            id="name"
+                            type="text"
+                            value={draftName}
+                            onChange={(event) => setDraftName(event.target.value)}
+                            aria-invalid={nameError !== ""}
+                            aria-describedby={nameError ? "name-error" : undefined}
+                        />
+                        {nameError && (
+                            <p id="name-error" role="alert" className="col-start-2 text-sm text-red-600">
+                                {nameError}
+                            </p>
+                        )}
+
+                        <label className="mb-2 block font-medium" htmlFor="email">
+                            Email
+                        </label>
+
+                        <Input
+                            id="email"
+                            type="email"
+                            required
+                            value={draftEmail}
+                            onChange={(event) => setDraftEmail(event.target.value)}
+                        />
+
+                        <div className="col-span-2 mt-4 flex justify-end gap-3 text-sm">
+                            <Button
+                            variant="primary"
+                            type="submit"
+                            disabled={!hasProfileChanged}
+                            >
+                            Save changes
+                            </Button>
+                            <Button 
+                                variant="secondary"
+                                type="button"
+                                className="rounded-lg bg-secondary px-4 py-2 font-semibold text-on-secondary hover:bg-secondary-hover"
+                                onClick={handleCancelEdit}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+                </div>
+            </Card>
         </main>
     );
 }
