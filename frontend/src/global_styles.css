@@ -1,5 +1,43 @@
 
 @import "tailwindcss";
+
+@theme {
+  /* page and containers */
+  --color-page: #ecd19c;
+  --color-surface: white;
+  --color-surface-tinted: #ecfccb;
+
+  /* text */
+  --color-foreground: #111827;
+  --color-muted: #4b5563;
+
+  /* main actions */
+  --color-primary: #d8b4fe;
+  --color-primary-hover: #c084fc;
+  --color-on-primary: #111827;
+
+  /* secondary actions */
+  --color-secondary: #fdba74;
+  --color-secondary-hover: #fb923c;
+  --color-on-secondary: #111827;
+
+  /* Borders and keyboard focus */
+  --color-border: #d1d5db;
+  --color-focus: #6b21a8;
+
+  /* Validation */
+  --color-error: #b91c1c;
+  --color-error-surface: #fef2f2;
+
+  --font-sans: system-ui, sans-serif;
+
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+
+  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.08);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.18);
+}
+
 :root {
   font-family: Inter, system-ui, sans-serif;
   line-height: 1.5;
@@ -19,7 +57,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #ecd19c;
+  background-color: var(--color-page);
   background-image: url('./assets/pattern.svg');
   background-size: 120px 120px;
   image-rendering: pixelated;
@@ -27,4 +65,5 @@ body {
 
 button {
   cursor: pointer;
+
 }
