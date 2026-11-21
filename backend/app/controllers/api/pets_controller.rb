@@ -1,34 +1,35 @@
 module Api
   class PetsController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: :create
+    before_action :require_user
+
+    def show
+      render json: { pet: pet_json(current_user.pets.order(:id).first) }
+    end
 
     def create
-      owner = find_owner
-      return render json: { errors: ["Owner not found"] }, status: :unprocessable_entity if owner.nil?
+      # Serialize creation per owner so simultaneous submissions cannot create duplicates.
+      current_user.with_lock do
+        if current_user.pets.exists?
+          return render json: { error: "You already have a Gotchi." }, status: :conflict
+        end
 
-      pet = owner.pets.new(name: pet_params[:name], species: pet_params[:species])
-
-      if pet.save
-        render json: {
-          pet: pet.slice(:id, :name, :species, :owner_id, :health, :hunger, :energy, :created_at)
-        }, status: :created
-      else
-        render json: { errors: pet.errors.full_messages }, status: :unprocessable_entity
+        pet = current_user.pets.new(params.require(:pet).permit(:name, :species))
+        if pet.save
+          render json: { pet: pet_json(pet) }, status: :created
+        else
+          render json: { errors: pet.errors.to_hash(true) }, status: :unprocessable_entity
+        end
       end
     end
 
     private
 
-    def pet_params
-      params.require(:pet).permit(:name, :species, :owner_id, :owner_username)
+    def require_user
+      render json: { error: "Not authenticated" }, status: :unauthorized unless current_user
     end
 
-    def find_owner
-      if pet_params[:owner_id].present?
-        User.find_by(id: pet_params[:owner_id])
-      elsif pet_params[:owner_username].present?
-        User.find_by(username: pet_params[:owner_username])
-      end
+    def pet_json(pet)
+      pet&.as_json(only: %i[id name species owner_id health hunger energy created_at])
     end
   end
 end

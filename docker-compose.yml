@@ -5,7 +5,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
       interval: 2s
       timeout: 5s
       retries: 15
@@ -18,10 +18,13 @@ services:
     volumes:
       - ./backend/db:/app/db
       - ./backend/app:/app/app
-      - ./backend/config:/app/config
     environment:
       PGHOST: db
       PGPASSWORD: ${POSTGRES_PASSWORD}
+      # Keep these overrides for local testing while the stack uses HTTP.
+      # TODO: Remove both once HTTPS is configured to restore production defaults.
+      RAILS_ASSUME_SSL: "false"
+      RAILS_FORCE_SSL: "false"
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +36,9 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    environment:
+      API_PROXY_TARGET: http://backend:3000
+      VITE_API_URL: /api
 
 #  nginx:
 #    build: ./nginx
