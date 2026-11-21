@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     post "auth/login", to: "sessions#create"
     delete "auth/logout", to: "sessions#destroy"
     get "auth/me", to: "sessions#show"
+    patch "profile", to: "profiles#update"
     resource :pet, only: %i[show create]
     resources :pets, only: :create
   end
