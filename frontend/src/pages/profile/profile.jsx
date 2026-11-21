@@ -121,6 +121,7 @@ export default function Profile() {
             setAvatarError("");
             avatarInputRef.current.value = "";
             setIsAvatarEditing(false);
+            setSuccessMessage("Avatar updated.");
         } catch {
             setAvatarError("Could not save your avatar. Try a smaller image.");
         }
