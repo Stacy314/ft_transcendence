@@ -21,6 +21,7 @@ services:
     environment:
       PGHOST: db
       PGPASSWORD: ${POSTGRES_PASSWORD}
+      # remove after nginx setup
       # Keep these overrides for local testing while the stack uses HTTP.
       # TODO: Remove both once HTTPS is configured to restore production defaults.
       RAILS_ASSUME_SSL: "false"
