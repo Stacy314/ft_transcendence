@@ -14,7 +14,7 @@ export default function Modal({ children, isOpen, onClose, title }) {
     }, [isOpen]);
 
     return (
-        <dialog 
+        <dialog
             ref={dialogRef}
             onCancel={(event) => {
                 event.preventDefault();

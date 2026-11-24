@@ -35,7 +35,7 @@ class ApiPetsTest < ActionDispatch::IntegrationTest
 
     # A fresh browser session must retrieve the same saved selection.
     browser = open_session
-    browser.post "/api/session", params: { username: @owner.username, password: "secure-password" }
+    browser.post "/api/auth/login", params: { session: { username: @owner.username, password: "secure-password" } }
     browser.get "/api/pet"
     assert_equal pet["id"], browser.response.parsed_body.dig("pet", "id")
     assert_equal "cat-2", browser.response.parsed_body.dig("pet", "species")
@@ -90,7 +90,7 @@ class ApiPetsTest < ActionDispatch::IntegrationTest
   private
 
   def sign_in(user)
-    post "/api/session", params: { username: user.username, password: "secure-password" }
-    assert_response :created
+    post "/api/auth/login", params: { session: { username: user.username, password: "secure-password" } }
+    assert_response :ok
   end
 end

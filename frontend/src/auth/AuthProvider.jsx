@@ -10,7 +10,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     let active = true;
-    apiRequest('/session')
+    apiRequest('/auth/me')
       .then(data => { if (active) setUser(data.user); })
       .catch(error => {
         if (active && error.status !== 401) setError(error.message);
@@ -20,17 +20,17 @@ export default function AuthProvider({ children }) {
   }, [attempt]);
 
   async function login(credentials) {
-    const data = await apiRequest('/session', { method: 'POST', body: credentials });
+    const data = await apiRequest('/auth/login', { method: 'POST', body: { session: credentials } });
     setUser(data.user);
   }
 
   async function register(credentials) {
-    const data = await apiRequest('/registration', { method: 'POST', body: { user: credentials } });
+    const data = await apiRequest('/auth/signup', { method: 'POST', body: { user: credentials } });
     setUser(data.user);
   }
 
   async function logout() {
-    await apiRequest('/session', { method: 'DELETE' });
+    await apiRequest('/auth/logout', { method: 'DELETE' });
     setUser(null);
   }
 

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  namespace :api do
+  namespace :api, defaults: { format: :json } do
     get "csrf", to: "csrf#show"
-    post "registration", to: "registrations#create"
-    resource :session, only: %i[create destroy show]
+    post "auth/signup", to: "registrations#create"
+    post "auth/login", to: "sessions#create"
+    delete "auth/logout", to: "sessions#destroy"
+    get "auth/me", to: "sessions#show"
+    patch "profile", to: "profiles#update"
     resource :pet, only: %i[show create]
+    resources :pets, only: :create
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

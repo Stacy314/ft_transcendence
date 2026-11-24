@@ -6,7 +6,7 @@ export default function Avatar({src, alt, size="lg"}) {
     };
 
     return (
-        <img 
+        <img
             src={src}
             alt={alt}
             className={`rounded-full object-cover border-6 border-white ${sizeStyles[size]}`}

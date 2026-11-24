@@ -55,7 +55,7 @@ api.interceptors.request.use(async (config) => {
 // the router can replace it with a soft navigate():
 //   setUnauthorizedHandler(() => navigate('/login', { replace: true }))
 export const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
-const AUTH_ENDPOINTS = ['/session', '/registration', '/csrf'];
+const AUTH_ENDPOINTS = ['/auth/login', '/auth/signup', '/auth/logout', '/auth/me', '/csrf'];
 
 let onUnauthorized = () => {
   if (!PUBLIC_PATHS.includes(window.location.pathname)) {
@@ -92,7 +92,7 @@ api.interceptors.response.use(
     }
 
     // On the auth endpoints a 401 is an expected answer, not an expired
-    // session: GET /session = "nobody is logged in", POST /session =
+    // session: GET /auth/me = "nobody is logged in", POST /auth/login =
     // "wrong username or password". The caller handles those itself.
     const isAuthEndpoint = AUTH_ENDPOINTS.includes(config?.url);
  

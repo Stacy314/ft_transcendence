@@ -51,8 +51,8 @@ down: ## stop and remove containers
 
 restart: ## restart without rebuilding (all, or one: make restart SERVICE=frontend)
 	$(COMPOSE) restart $(SERVICE)
-	
-rebuild: build ## rebuild rebuild from scratch and restart  
+
+rebuild: build ## rebuild rebuild from scratch and restart
 	$(COMPOSE) build --no-cache $(SERVICE)
 	$(COMPOSE) up -d --force-recreate --renew-anon-volumes $(SERVICE)
 
