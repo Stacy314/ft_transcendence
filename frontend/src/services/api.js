@@ -1,19 +1,15 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-// Shared HTTP client for every request to the Rails API.
-//
 // Authentication is a server-side session stored in an httpOnly cookie
 // (_tamagotchi_session). The browser sends it automatically; JavaScript never
 // sees it. Requests that change data must also carry a CSRF token, which Rails
 // gives us from GET /api/csrf.
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
-  withCredentials: true, // send the session cookie
+  withCredentials: true,
   headers: { Accept: 'application/json' },
 });
-
-// ---------- CSRF ----------
 
 const SAFE_METHODS = ['get', 'head', 'options'];
 let csrfToken = null;
@@ -49,11 +45,6 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-// ---------- 401 handling ----------
-
-// What to do when the session has expired. Defaults to a full page redirect;
-// the router can replace it with a soft navigate():
-//   setUnauthorizedHandler(() => navigate('/login', { replace: true }))
 export const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
 const AUTH_ENDPOINTS = ['/session', '/registration', '/csrf'];
 
@@ -106,10 +97,6 @@ api.interceptors.response.use(
   },
 );
 
-// ---------- Errors for the UI ----------
-
-// Turns any API error into something a form can show:
-//   { message: 'Invalid username or password', fields: { email: ['...'] } }
 export function getApiError(error) {
   const data = error?.response?.data;
   if (!error?.response) {

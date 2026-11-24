@@ -1,76 +1,61 @@
 .gotchi-page {
   align-self: center;
+  width: min(26rem, 90vw);
+  min-width: 0;
   display: grid;
-  justify-content: center;
+  gap: 1rem;
+  margin-block: 1.5rem;
+  padding: 1.75rem clamp(1rem, 4vw, 1.5rem) 2rem;
   font-family: sans-serif;
-  --gotchi-color: #e1b671;
-}
-
-.gotchi-error {
-  margin: 0;
-  padding: .6rem;
-  border-radius: 8px;
-  background: #ffe6e6;
-  color: #651010;
+  color: #514535;
 }
 
 .gotchi-title {
-  text-align: center;
-  padding: 0 1.5rem;
-  line-height: 2.8rem;
-  border-radius: 8px 8px 0 0;
-  background: var(--gotchi-color);
-  color: #fff;
-  font-weight: bold;
+  justify-self: center;
+  font-size: clamp(1.35rem, 4.5vw, 1.75rem);
 }
 
 .gotchi-form {
-  width: min(26rem, 90vw);
+  width: 100%;
+  min-width: 0;
   display: grid;
   gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 0 0 8px 8px;
-  background: var(--gotchi-color);
-  color: #fff;
 }
 
 .gotchi-carousel {
+  min-width: 0;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.75rem;
+  gap: clamp(0.4rem, 2vw, 0.75rem);
 }
 
 .gotchi-arrow {
   width: 2.8rem;
   height: 2.8rem;
-  border: none;
-  border-radius: 12px;
-  background: #7ec8f2;
-  color: #0b3b57;
   font-size: 1.1rem;
 }
 
 .gotchi-card {
+  min-width: 0;
   display: grid;
   justify-items: center;
   gap: 0.4rem;
-  padding: 1rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.35);
+  padding: 1rem clamp(0.5rem, 2vw, 1rem);
   font-weight: bold;
+  overflow-wrap: anywhere;
 }
 
 .gotchi-count {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: normal;
 }
 
 .gotchi-image {
   display: grid;
   place-items: center;
-  width: 9rem;
-  height: 9rem;
+  width: min(9rem, 100%);
+  aspect-ratio: 1;
 }
 
 .gotchi-image img {
@@ -79,37 +64,17 @@
   image-rendering: pixelated;
 }
 
+.gotchi-image .cat-sprite {
+  width: min(5.25rem, 100%);
+  height: auto;
+}
+
 .gotchi-placeholder {
   display: grid;
   place-items: center;
   width: 100%;
   height: 100%;
-  border: 2px dashed #fff;
-  border-radius: 8px;
+  border: 2px dashed #c89b5a;
+  border-radius: 1rem;
   font-size: 2rem;
-}
-
-.gotchi-field {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.gotchi-field input {
-  height: 2.8rem;
-  padding: 0 0.7rem;
-  font: inherit;
-}
-
-.gotchi-form > button[type='submit'] {
-  height: 2.8rem;
-  border: none;
-  border-radius: 12px;
-  background: #7ec8f2;
-  color: #0b3b57;
-  font-weight: bold;
-}
-
-.gotchi-form > button[type='submit']:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }

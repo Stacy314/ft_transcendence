@@ -39,6 +39,8 @@
 }
 
 :root {
+  --panel-background: #e1b671;
+
   font-family: Inter, system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -63,7 +65,12 @@ body {
   image-rendering: pixelated;
 }
 
-button {
-  cursor: pointer;
+@layer base {
+  #root {
+    @apply min-h-screen w-full;
+  }
 
+  button {
+    cursor: pointer;
+  }
 }

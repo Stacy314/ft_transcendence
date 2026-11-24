@@ -1,0 +1,162 @@
+@reference '../../global_styles.css';
+
+@layer theme, base, components, utilities;
+
+/* Page utilities can override component defaults such as spacing and size. */
+@layer components {
+  .ui-button {
+    @apply cursor-pointer disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .ui-button[aria-busy='true'] {
+    @apply cursor-wait;
+  }
+
+  .ui-button-primary,
+  .ui-button-round {
+    @apply border-2 border-[#6ab0d8] bg-[#7ec8f2] font-bold text-[#0b3b57];
+    box-shadow:
+      inset 0 2px 0 #ffffff66,
+      0 4px 0 #5b98bc;
+    transition:
+      background 0.2s,
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .ui-button-primary {
+    @apply h-[2.8rem] rounded-[12px] px-[0.7rem];
+  }
+
+  .ui-button-round {
+    @apply aspect-square rounded-full;
+  }
+
+  .ui-button-secondary {
+    @apply cursor-pointer rounded-[30px] border border-[#b99970] bg-[#dcc29d] px-[1.2rem] py-3 text-[#514535];
+    @apply transition-[background-color,translate] duration-200 ease-[ease] motion-reduce:transition-none;
+    font: inherit;
+  }
+
+  .ui-button-secondary:hover:not(:disabled) {
+    @apply bg-[#c9aa7d] motion-safe:-translate-y-0.5;
+  }
+
+  .ui-button-primary:hover:enabled,
+  .ui-button-round:hover:enabled,
+  .ui-button[data-highlighted='true'] {
+    @apply bg-[#a5dcfa];
+  }
+
+  .ui-button-primary:hover:enabled,
+  .ui-button-round:hover:enabled {
+    transform: translateY(-2px);
+  }
+
+  .ui-button-primary:active:enabled,
+  .ui-button-round:active:enabled {
+    transform: translateY(2px);
+    box-shadow:
+      inset 0 2px 0 #ffffff66,
+      0 2px 0 #5b98bc;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ui-button-primary,
+    .ui-button-round {
+      transition: none;
+    }
+
+    .ui-button-primary:is(:hover, :active):enabled,
+    .ui-button-round:is(:hover, :active):enabled {
+      transform: none;
+    }
+  }
+
+  .ui-button-tab {
+    @apply h-[2.8rem] rounded-t-[1.25rem] border border-b-0 border-[#c89b5a99] px-2;
+    background: color-mix(in srgb, var(--panel-background) 60%, transparent);
+    box-shadow: inset 0 3px 0 #fff5dd66;
+    font-size: 1rem;
+  }
+
+  .ui-button-tab[aria-pressed='true'] {
+    @apply relative border-[#c89b5a] bg-(--panel-background) font-bold;
+    box-shadow: inset 0 3px 0 #fff5dd99;
+  }
+
+  /* Cover the panel's top border and highlight below the selected tab. */
+  .ui-button-tab[aria-pressed='true']::after {
+    @apply pointer-events-none absolute inset-x-0 -bottom-[4px] h-[4px] bg-(--panel-background);
+    content: '';
+  }
+
+  .ui-panel {
+    @apply border border-[#c89b5a] bg-(--panel-background);
+    box-shadow:
+      inset 0 3px 0 #fff5dd99,
+      0 8px 0 #c69a5c,
+      0 16px 28px #6e4c2b26;
+  }
+
+  .ui-panel-rounded {
+    @apply rounded-[8px];
+  }
+
+  .ui-panel-arched {
+    border-radius: 44% 44% 36% 36% / 15% 15% 12% 12%;
+  }
+
+  .ui-panel-tabbed {
+    border-radius: 0 33.333333% 36% 36% / 0 15% 12% 12%;
+  }
+
+  .ui-panel-inset {
+    @apply border-4 border-[#fff3da] bg-[#fff3da80];
+    border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
+    box-shadow: 0 3px 0 #b88c5140;
+  }
+
+  .ui-panel-title {
+    @apply max-w-full px-5 pt-2 pb-[0.65rem] text-center leading-[1.15] font-extrabold wrap-anywhere;
+    border-radius: 50% 50% 42% 42% / 45% 45% 55% 55%;
+    background: #fff3da;
+    color: #59412d;
+    box-shadow: 0 3px 0 #b88c5140;
+  }
+
+  .ui-form-field {
+    @apply grid min-w-0 gap-[0.4rem];
+  }
+
+  .ui-form-field input {
+    @apply h-[2.8rem] w-full min-w-0 rounded-2xl border-2 border-[#fff3da] bg-[#fff3da] px-[0.7rem];
+    color: #514535;
+    box-shadow: 0 3px 0 #b88c5140;
+    font: inherit;
+  }
+
+  .ui-button:focus-visible,
+  .ui-form-field input:focus-visible {
+    outline: 3px solid #0b3b57;
+    outline-offset: 3px;
+  }
+
+  .ui-form-field input[aria-invalid='true'] {
+    outline: 2px solid #7a1010;
+    outline-offset: -2px;
+  }
+
+  .ui-field-error,
+  .ui-form-error {
+    @apply m-0 font-bold text-[#7a1010];
+  }
+
+  .ui-field-error {
+    @apply text-[0.85rem];
+  }
+
+  .ui-form-error {
+    @apply rounded-[8px] bg-[#fff4f2] px-[0.8rem] py-[0.6rem];
+  }
+}

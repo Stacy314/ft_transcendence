@@ -1,6 +1,9 @@
-import '../login/style.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '../../components/ui/Button.jsx';
+import FormField from '../../components/ui/FormField.jsx';
+import Panel from '../../components/ui/Panel.jsx';
+import '../login/style.css';
 
 export default function ForgotPassword() {
   const [sent, setSent] = useState(false);
@@ -12,21 +15,20 @@ export default function ForgotPassword() {
 
   return (
     <main className="login-page">
-      <form className="login-form forgot-form" onSubmit={handleSubmit}>
+      <Panel as="form" className="login-form" onSubmit={handleSubmit}>
         <h1>Forgot password</h1>
         {sent ? (
           <p>If the email exists, a reset link has been sent.</p>
         ) : (
           <>
-            <div className="login-field">
-              <label htmlFor="email">Email:</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <button type="submit">Send reset link</button>
+            <FormField type="email" id="email" label="Email:" required />
+            <Button type="submit">Send reset link</Button>
           </>
         )}
-        <Link to="/" className="login-forgot">Back to login</Link>
-      </form>
+        <Link to="/" className="login-forgot">
+          Back to login
+        </Link>
+      </Panel>
     </main>
   );
 }
