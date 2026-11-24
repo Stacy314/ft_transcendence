@@ -1,13 +1,29 @@
 import './style.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { GOTCHIS } from './gotchis.js';
+import { useCreatePet, usePet } from '../../hooks/usePet';
+import { getApiError } from '../../services/api';
 
 export default function GotchiSelection() {
     const navigate = useNavigate();
     const [index, setIndex] = useState(0);
     const current = GOTCHIS[index];
     const [name, setName] = useState('');
+    const petQuery = usePet();
+    const createMutation = useCreatePet();
+
+    if (petQuery.isPending) return <p role="status">Loading…</p>;
+    if (petQuery.isError) return (
+      <main className="gotchi-page" role="alert">
+        <p>{getApiError(petQuery.error).message}</p>
+        <button type="button" disabled={petQuery.isFetching} onClick={() => petQuery.refetch()}>Try again</button>
+      </main>
+    );
+    if (petQuery.data) return <Navigate to="/dashboard" replace />;
+
+    const apiError = createMutation.error ? getApiError(createMutation.error) : null;
+    const errorMessage = apiError && (Object.values(apiError.fields).flat().join('. ') || apiError.message);
 
     function move(step) {
         setIndex((i) => (i + step + GOTCHIS.length) % GOTCHIS.length);
@@ -15,8 +31,10 @@ export default function GotchiSelection() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        localStorage.setItem('gotchi', JSON.stringify({ type: current.id, name: name.trim() }));
-        navigate('/dashboard');
+        if (createMutation.isPending || !name.trim()) return;
+        createMutation.mutate({ species: current.id, name: name.trim() }, {
+            onSuccess: () => navigate('/dashboard', { replace: true }),
+        });
     }
 
     return (
@@ -24,7 +42,7 @@ export default function GotchiSelection() {
           <div className="gotchi-title">Choose your Gotchi</div>
           <form className="gotchi-form" onSubmit={handleSubmit}>
             <div className="gotchi-carousel" aria-label="Gotchi selection">
-              <button type="button" className="gotchi-arrow" aria-label="Previous gotchi" onClick={() => move(-1)}>
+              <button type="button" className="gotchi-arrow" aria-label="Previous gotchi" disabled={createMutation.isPending} onClick={() => move(-1)}>
                 &#9664;
               </button>
               <div className="gotchi-card" aria-live="polite">
@@ -36,7 +54,7 @@ export default function GotchiSelection() {
                 <span>{current.label}</span>
                 <span className="gotchi-count">{index + 1} / {GOTCHIS.length}</span>
               </div>
-              <button type="button" className="gotchi-arrow" aria-label="Next gotchi" onClick={() => move(1)}>
+              <button type="button" className="gotchi-arrow" aria-label="Next gotchi" disabled={createMutation.isPending} onClick={() => move(1)}>
                 &#9654;
               </button>
             </div>
@@ -48,13 +66,15 @@ export default function GotchiSelection() {
                 id="gotchi-name"
                 name="gotchi-name"
                 maxLength={20}
+                disabled={createMutation.isPending}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
 
-            <button type="submit" disabled={!name.trim()}>Confirm</button>
+            {errorMessage && <p className="gotchi-error" role="alert">{errorMessage}</p>}
+            <button type="submit" disabled={!name.trim() || createMutation.isPending}>{createMutation.isPending ? 'Saving…' : 'Confirm'}</button>
           </form>
         </main>
     );

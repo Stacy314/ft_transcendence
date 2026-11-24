@@ -6,6 +6,14 @@
   --gotchi-color: #e1b671;
 }
 
+.gotchi-error {
+  margin: 0;
+  padding: .6rem;
+  border-radius: 8px;
+  background: #ffe6e6;
+  color: #651010;
+}
+
 .gotchi-title {
   text-align: center;
   padding: 0 1.5rem;

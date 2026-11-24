@@ -24,7 +24,20 @@
   width: 100%;
 }
 
-.site-layout > footer {
+.site-footer {
   background-color: #e1b671;
   padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-footer nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-footer a {
+  text-decoration: underline;
 }
