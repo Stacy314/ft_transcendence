@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser } from './useMe';
-import { createPet, getPet } from '../services/pets';
+import { createPet, getPet, feedPet, playWithPet, cleanPet } from '../services/pets';
 
 const petKey = userId => ['pet', userId];
 
@@ -27,3 +27,29 @@ export function useCreatePet() {
     },
   });
 }
+
+// Shared plumbing for the feed/play/clean buttons: replenish one stat, cache the returned pet.
+function usePetAction(action, mutationFn) {
+  const { user } = useCurrentUser();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn,
+    onSuccess: pet => queryClient.setQueryData(petKey(user?.id), pet),
+    onError: error => {
+      // A 429 means our countdown ran ahead: re-disable the button from retry_after.
+      if (error.response?.status !== 429) return;
+      const retryAfter = error.response.data?.retry_after;
+      if (!retryAfter) return;
+
+      queryClient.setQueryData(petKey(user?.id), pet =>
+        pet
+          ? { ...pet, ready_at: { ...pet.ready_at, [action]: Date.now() + retryAfter * 1000 } }
+          : pet,
+      );
+    },
+  });
+}
+
+export const useFeedPet = () => usePetAction('feed', feedPet);
+export const usePlayWithPet = () => usePetAction('play', playWithPet);
+export const useCleanPet = () => usePetAction('clean', cleanPet);
