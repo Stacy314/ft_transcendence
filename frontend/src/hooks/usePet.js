@@ -28,19 +28,28 @@ export function useCreatePet() {
   });
 }
 
-// Shared plumbing for the feed/play/clean buttons: each just replenishes one
-// stat on the server and writes the returned pet back into the query cache.
-// While the action is still on cooldown (429) the UI keeps the stale pet and
-// relies on its own cooldown countdown, so there is nothing to patch up here.
-function usePetAction(mutationFn) {
+// Shared plumbing for the feed/play/clean buttons: replenish one stat, cache the returned pet.
+function usePetAction(action, mutationFn) {
   const { user } = useCurrentUser();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn,
     onSuccess: pet => queryClient.setQueryData(petKey(user?.id), pet),
+    onError: error => {
+      // A 429 means our countdown ran ahead: re-disable the button from retry_after.
+      if (error.response?.status !== 429) return;
+      const retryAfter = error.response.data?.retry_after;
+      if (!retryAfter) return;
+
+      queryClient.setQueryData(petKey(user?.id), pet =>
+        pet
+          ? { ...pet, ready_at: { ...pet.ready_at, [action]: Date.now() + retryAfter * 1000 } }
+          : pet,
+      );
+    },
   });
 }
 
-export const useFeedPet = () => usePetAction(feedPet);
-export const usePlayWithPet = () => usePetAction(playWithPet);
-export const useCleanPet = () => usePetAction(cleanPet);
+export const useFeedPet = () => usePetAction('feed', feedPet);
+export const usePlayWithPet = () => usePetAction('play', playWithPet);
+export const useCleanPet = () => usePetAction('clean', cleanPet);

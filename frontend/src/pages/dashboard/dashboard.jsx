@@ -5,11 +5,9 @@ import { usePet, useFeedPet, usePlayWithPet, useCleanPet } from '../../hooks/use
 import { useCooldown } from '../../hooks/useCooldown';
 import { getApiError } from '../../services/api';
 
-// One Feed/Play/Clean button: replenishes its stat, then disables itself for
-// the server-enforced cooldown (derived from the pet's own timestamps, so a
-// reload doesn't reset it).
-function ActionButton({ label, mutation, lastAt, cooldownSeconds }) {
-  const remaining = useCooldown(lastAt, cooldownSeconds);
+// One Feed/Play/Clean button: replenishes its stat, then disables itself for the remaining cooldown.
+function ActionButton({ label, mutation, readyAt }) {
+  const remaining = useCooldown(readyAt);
   const onCooldown = remaining > 0;
   return (
     <button
@@ -37,7 +35,9 @@ export default function Dashboard() {
   );
   if (!gotchi) return <Navigate to="/gotchi-selection" replace />;
   const type = GOTCHIS.find((g) => g.id === gotchi.species);
-  const cooldowns = gotchi.action_cooldowns || {};
+  const readyAt = gotchi.ready_at || {};
+  // A rejected action has to say so instead of looking like nothing happened.
+  const rejected = [feed, play, clean].find((m) => m.isError);
 
   return (
     <main className="dashboard-page">
@@ -54,10 +54,11 @@ export default function Dashboard() {
           <div><span>Energy</span><strong>{gotchi.energy}%</strong></div>
         </div>
         <div className="dashboard-actions">
-          <ActionButton label="Feed" mutation={feed} lastAt={gotchi.last_fed_at} cooldownSeconds={cooldowns.feed} />
-          <ActionButton label="Play" mutation={play} lastAt={gotchi.last_played_at} cooldownSeconds={cooldowns.play} />
-          <ActionButton label="Clean" mutation={clean} lastAt={gotchi.last_cleaned_at} cooldownSeconds={cooldowns.clean} />
+          <ActionButton label="Feed" mutation={feed} readyAt={readyAt.feed} />
+          <ActionButton label="Play" mutation={play} readyAt={readyAt.play} />
+          <ActionButton label="Clean" mutation={clean} readyAt={readyAt.clean} />
         </div>
+        {rejected && <p role="alert">{getApiError(rejected.error).message}</p>}
       </div>
     </main>
   );
