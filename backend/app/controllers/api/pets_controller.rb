@@ -4,7 +4,8 @@ module Api
 
     def show
       pet = current_user.pets.order(:id).first
-      pet&.apply_decay!
+      # Reporting the decay without saving it keeps this read from overwriting a concurrent action.
+      pet&.apply_decay
       render json: { pet: pet_json(pet) }
     end
 
@@ -59,12 +60,9 @@ module Api
     def pet_json(pet)
       return nil unless pet
 
-      pet.as_json(only: %i[id name species owner_id health hunger energy created_at last_fed_at last_played_at last_cleaned_at])
-         .merge("action_cooldowns" => {
-           "feed" => Pet::FEED_COOLDOWN.to_i,
-           "play" => Pet::PLAY_COOLDOWN.to_i,
-           "clean" => Pet::CLEAN_COOLDOWN.to_i,
-         })
+      # Seconds remaining rather than last_*_at: the client cannot trust its own clock.
+      pet.as_json(only: %i[id name species owner_id health hunger energy created_at])
+         .merge("cooldowns" => Pet::ACTION_COOLDOWNS.keys.index_with { |action| pet.cooldown_remaining(action) })
     end
   end
 end

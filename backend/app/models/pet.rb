@@ -14,6 +14,13 @@ class Pet < ApplicationRecord
   PLAY_AMOUNT = 20
   CLEAN_AMOUNT = 20
 
+  # action => [timestamp of the last successful use, how long it blocks]
+  ACTION_COOLDOWNS = {
+    feed: [:last_fed_at, FEED_COOLDOWN],
+    play: [:last_played_at, PLAY_COOLDOWN],
+    clean: [:last_cleaned_at, CLEAN_COOLDOWN],
+  }.freeze
+
   normalizes :name, with: ->(name) { name.strip }
 
   validates :name, presence: true, length: { maximum: 20 }
@@ -22,10 +29,11 @@ class Pet < ApplicationRecord
   validates :hunger, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: STAT_MAX }
   validates :energy, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: STAT_MAX }
 
-  def apply_decay!
+  # Updates the stats in memory: decay is derivable from the stored row, so a read need not save it.
+  def apply_decay
     reference_time = last_updated_at || created_at
     ticks = ((Time.current - reference_time) / TICK).floor
-    return if ticks <= 0
+    return self if ticks <= 0
 
     hunger_zero_at = (hunger.to_f / HUNGER_DECAY_PER_TICK).ceil
     energy_zero_at = (energy.to_f / ENERGY_DECAY_PER_TICK).ceil
@@ -35,19 +43,35 @@ class Pet < ApplicationRecord
     self.energy = clamp_stat(energy - ENERGY_DECAY_PER_TICK * ticks)
     self.health = clamp_stat(health - STARVING_HEALTH_DECAY_PER_TICK * starving_ticks) if starving_ticks.positive?
     self.last_updated_at = reference_time + ticks * TICK
-    save!
+    self
+  end
+
+  # Only for callers that already hold the owner's lock.
+  def apply_decay!
+    apply_decay
+    save! if changed?
+    self
+  end
+
+  # Seconds left before the action may be used again, 0 when ready. The client counts down from this.
+  def cooldown_remaining(action)
+    timestamp_attr, cooldown = ACTION_COOLDOWNS.fetch(action.to_sym)
+    last_at = public_send(timestamp_attr)
+    return 0 unless last_at
+
+    [(cooldown - (Time.current - last_at)).ceil, 0].max
   end
 
   def feed!
-    perform_action(:last_fed_at, FEED_COOLDOWN) { self.hunger = clamp_stat(hunger + FEED_AMOUNT) }
+    perform_action(:feed) { self.hunger = clamp_stat(hunger + FEED_AMOUNT) }
   end
 
   def play!
-    perform_action(:last_played_at, PLAY_COOLDOWN) { self.energy = clamp_stat(energy + PLAY_AMOUNT) }
+    perform_action(:play) { self.energy = clamp_stat(energy + PLAY_AMOUNT) }
   end
 
   def clean!
-    perform_action(:last_cleaned_at, CLEAN_COOLDOWN) { self.health = clamp_stat(health + CLEAN_AMOUNT) }
+    perform_action(:clean) { self.health = clamp_stat(health + CLEAN_AMOUNT) }
   end
 
   private
@@ -56,15 +80,15 @@ class Pet < ApplicationRecord
     value.clamp(0, STAT_MAX)
   end
 
-  def perform_action(timestamp_attr, cooldown)
-    apply_decay!
+  # Seconds still to wait when on cooldown, nil once applied. A rejected attempt writes nothing.
+  def perform_action(action)
+    apply_decay
 
-    last_at = public_send(timestamp_attr)
-    remaining = last_at ? cooldown - (Time.current - last_at) : 0
-    return remaining.ceil if remaining.positive?
+    remaining = cooldown_remaining(action)
+    return remaining if remaining.positive?
 
     yield
-    public_send("#{timestamp_attr}=", Time.current)
+    public_send("#{ACTION_COOLDOWNS.fetch(action).first}=", Time.current)
     save!
     nil
   end

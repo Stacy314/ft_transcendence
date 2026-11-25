@@ -69,6 +69,38 @@ class ApiPetsTest < ActionDispatch::IntegrationTest
     assert_response :conflict
   end
 
+  test "reading the pet reports the decay without writing it" do
+    pet = @owner.pets.create!(name: "Mochi", species: "cat-1", hunger: 50, energy: 50, last_updated_at: 5.minutes.ago)
+    sign_in(@owner)
+
+    # A read that saved could overwrite a concurrent action, so it must leave the row untouched.
+    assert_no_changes -> { pet.reload.attributes } do
+      get "/api/pet"
+    end
+    assert_response :success
+    assert_equal 45, response.parsed_body.dig("pet", "hunger")
+    assert_equal 45, response.parsed_body.dig("pet", "energy")
+  end
+
+  test "an action replenishes one stat and reports the cooldown in seconds left" do
+    pet = @owner.pets.create!(name: "Mochi", species: "cat-1")
+    sign_in(@owner)
+
+    patch "/api/pet/feed"
+    assert_response :success
+    body = response.parsed_body["pet"]
+    assert_equal 90, body["hunger"]
+    assert_equal Pet::FEED_COOLDOWN.to_i, body["cooldowns"]["feed"]
+    assert_equal 0, body["cooldowns"]["play"]
+    # No absolute timestamps: the client would have to subtract them from its own clock.
+    assert_not body.key?("last_fed_at")
+
+    patch "/api/pet/feed"
+    assert_response :too_many_requests
+    assert_operator response.parsed_body["retry_after"], :>, 0
+    assert_equal 90, pet.reload.hunger
+  end
+
   test "pet creation requires a CSRF token" do
     sign_in(@owner)
     previous_setting = ActionController::Base.allow_forgery_protection
