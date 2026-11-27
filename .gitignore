@@ -80,3 +80,6 @@ backend/config/master.key
 frontend/dist
 frontend/.vite
 frontend/node_modules
+
+# Editor settings
+/.vscode

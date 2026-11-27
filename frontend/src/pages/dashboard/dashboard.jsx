@@ -99,7 +99,7 @@ function GotchiScene({ speciesId, activeAction, onActionComplete }) {
   return (
     <Panel
       variant="inset"
-      className="dashboard-scene relative aspect-[16/10] w-full min-w-0 overflow-hidden"
+      className="dashboard-scene relative aspect-16/10 w-full min-w-0 overflow-hidden"
       id={SCENE_ID}
       role="group"
       aria-label="Gotchi play area in a cozy room"
