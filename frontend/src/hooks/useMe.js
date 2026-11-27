@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getCurrentUser } from '../services/auth';
 import { useAuthStore } from '../store/authStore';
 
+// Cache key for "who is logged in". Auth hooks share this query.
 export const ME_KEY = ['auth', 'me'];
 
 // Puts the current user (or null) in both places that hold it:
@@ -23,18 +24,22 @@ export function switchUser(queryClient, user) {
   setCurrentUser(queryClient, user);
 }
 
+// Asks the backend who is logged in (GET /api/session). AuthBootstrap
+// starts the query, and other components share its cached answer.
 export function useMe() {
   return useQuery({
     queryKey: ME_KEY,
     queryFn: async () => {
-      const user = await getCurrentUser();
+      const user = await getCurrentUser(); // null when nobody is logged in
       useAuthStore.getState().setUser(user);
       return user;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // the session data stays fresh for 5 minutes
   });
 }
 
+// Convenience for components:
+//   const { user, isLoggedIn, isLoading } = useCurrentUser();
 export function useCurrentUser() {
   const { data, isPending } = useMe();
   return {

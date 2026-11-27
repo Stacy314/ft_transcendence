@@ -8,6 +8,7 @@ import '../login/style.css';
 export default function ForgotPassword() {
   const [sent, setSent] = useState(false);
 
+  // This placeholder shows confirmation locally. No reset request is sent.
   function handleSubmit(event) {
     event.preventDefault();
     setSent(true);

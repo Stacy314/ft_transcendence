@@ -6,6 +6,8 @@ export const USERNAME_PATTERN = /^[a-zA-Z0-9_]+$/;
 export const PASSWORD_MIN = 8;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Client-side validation returns { fieldName: 'message' } for invalid fields
+// and {} when all fields are valid.
 export function validateLogin({ username, password }) {
   const errors = {};
   if (!username.trim()) errors.username = 'Please enter your username.';
@@ -57,6 +59,7 @@ export function getServerFormErrors(fields, submittedValues, fallbackMessage) {
 
   for (const [key, messages] of Object.entries(fields)) {
     // Rails uses snake_case; match its field names to the submitted form values.
+    // E.g. password_confirmation becomes passwordConfirmation.
     const field = key.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
     const message = Array.isArray(messages) ? messages[0] : messages;
     if (typeof message !== 'string' || !message.trim()) continue;
@@ -68,6 +71,7 @@ export function getServerFormErrors(fields, submittedValues, fallbackMessage) {
     }
   }
 
+  // Use the fallback message only when no field shows the problem itself.
   const formError =
     generalMessages.join(' ') ||
     (Object.keys(fieldErrors).length === 0 ? fallbackMessage : '');

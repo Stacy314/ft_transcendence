@@ -7,6 +7,7 @@ export default function ProtectedRoute() {
 
   if (isPending) return <p role="status">Checking session…</p>;
 
+  // A failed session check can be retried here. Redirect only if the check succeeds without finding a user.
   if (isError) {
     return (
       <div role="alert">

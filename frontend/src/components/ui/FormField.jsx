@@ -1,5 +1,6 @@
 import './ui.css';
 
+// One field: label, input, and its error message (linked for screen readers).
 export default function FormField({
   id,
   name = id,
@@ -14,6 +15,7 @@ export default function FormField({
   ...inputProps
 }) {
   const errorId = error ? `${id}-error` : undefined;
+  // Keep any caller-provided description linked alongside the validation error.
   const descriptionIds = [describedBy, errorId].filter(Boolean).join(' ');
 
   return (

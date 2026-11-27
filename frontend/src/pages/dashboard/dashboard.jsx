@@ -6,7 +6,8 @@ import PetLoadError from '../../components/PetLoadError.jsx';
 import Button from '../../components/ui/Button.jsx';
 import Panel from '../../components/ui/Panel.jsx';
 import PanelTitle from '../../components/ui/PanelTitle.jsx';
-import { GOTCHIS, usePet } from '../../hooks/usePet';
+import { GOTCHIS } from '../../constants/gotchis';
+import { usePet } from '../../hooks/usePet';
 import { usePetActionAnimation } from '../../hooks/usePetActionAnimation';
 import './style.css';
 
@@ -44,6 +45,7 @@ export default function Dashboard() {
     );
   }
 
+  // Treat an initial read failure separately. A failed background refetch can leave usable pet data in the cache.
   if (isLoadingError) {
     return (
       <main className={PAGE_CLASSES}>
@@ -52,8 +54,10 @@ export default function Dashboard() {
     );
   }
 
+  // A successful response with no pet sends the user through first-time selection.
   if (!gotchi) return <Navigate to="/gotchi-selection" replace />;
 
+  // Reset local animation state if a different Gotchi replaces this one.
   return <DashboardContent key={gotchi.id} gotchi={gotchi} />;
 }
 
@@ -161,7 +165,9 @@ function StatBar({ label, value, color }) {
   );
 }
 
+// Care buttons currently trigger visual effects only. Stats come from the pet query.
 function GotchiCareActions({ activeActionType, onPlayAction }) {
+  // Announce which care action is playing through a live region.
   const announcement = CARE_ACTIONS.find(
     (action) => action.type === activeActionType,
   )?.message;

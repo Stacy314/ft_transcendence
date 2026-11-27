@@ -5,6 +5,7 @@ import { useLogout } from '../../hooks/useAuthActions';
 import { useCurrentUser } from '../../hooks/useMe';
 import { getApiError } from '../../services/api';
 
+// Nested routes render here inside the shared header and footer.
 export default function HeaderFooter() {
   const { isLoggedIn } = useCurrentUser();
   const logout = useLogout();

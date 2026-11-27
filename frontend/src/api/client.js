@@ -20,8 +20,12 @@ export async function apiRequest(path, { method = 'GET', body } = {}) {
   }
   const data = await response.json().catch(() => null);
   if (!response.ok) {
-    const errors = data?.errors ? Object.values(data.errors).flat().join('. ') : data?.error;
-    const error = new Error(errors || `Request failed (${response.status}). Please try again.`);
+    const errors = data?.errors
+      ? Object.values(data.errors).flat().join('. ')
+      : data?.error;
+    const error = new Error(
+      errors || `Request failed (${response.status}). Please try again.`,
+    );
     error.status = response.status;
     throw error;
   }

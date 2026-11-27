@@ -7,7 +7,8 @@ import FormError from '../../components/ui/FormError.jsx';
 import FormField from '../../components/ui/FormField.jsx';
 import Panel from '../../components/ui/Panel.jsx';
 import PanelTitle from '../../components/ui/PanelTitle.jsx';
-import { GOTCHIS, useCreatePet, usePet } from '../../hooks/usePet';
+import { GOTCHIS } from '../../constants/gotchis';
+import { useCreatePet, usePet } from '../../hooks/usePet';
 import { getApiError } from '../../services/api';
 import './style.css';
 
@@ -42,6 +43,7 @@ function GotchiSelectionForm() {
   const canSubmit = Boolean(trimmedName) && !isSaving;
   const errorMessage = error && getCreationErrorMessage(error);
 
+  // Add the list length before taking the remainder so moving left from the first item wraps to the last.
   function moveSelection(step) {
     setSelectedIndex(
       (index) => (index + step + GOTCHIS.length) % GOTCHIS.length,
@@ -135,6 +137,7 @@ function GotchiCarousel({ gotchi, position, disabled, onStep }) {
   );
 }
 
+// Collect specific field validation messages when the API provides them.
 function getCreationErrorMessage(error) {
   const { fields, message } = getApiError(error);
   return Object.values(fields).flat().join('. ') || message;

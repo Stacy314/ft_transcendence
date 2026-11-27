@@ -1,3 +1,4 @@
+/* The wrapper signals completion after 3 seconds. Keep this duration in sync with the hook fallback. */
 .pet-action-effect {
   position: absolute;
   inset: 0;
@@ -7,8 +8,13 @@
 }
 
 @keyframes pet-action-lifecycle {
-  0%, 88% { opacity: 1; }
-  100% { opacity: 0; }
+  0%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .pet-food-bowl {
@@ -23,8 +29,14 @@
 }
 
 @keyframes pet-bowl-arrive {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .pet-food-stream {
@@ -49,10 +61,20 @@
 }
 
 @keyframes pet-food-drop {
-  0% { top: 0; opacity: 0; }
-  15% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
 }
 
 .pet-ball-route {
@@ -91,22 +113,40 @@
 }
 
 @keyframes pet-ball-travel {
-  from { left: -18%; }
-  to { left: 108%; }
+  from {
+    left: -18%;
+  }
+  to {
+    left: 108%;
+  }
 }
 
 @keyframes pet-ball-bounce {
-  0%, 100% { transform: translateY(0); }
-  45% { transform: translateY(-1.7rem); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-1.7rem);
+  }
 }
 
 @keyframes pet-ball-shadow {
-  0%, 100% { opacity: 0.75; transform: scaleX(1); }
-  45% { opacity: 0.3; transform: scaleX(0.55); }
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scaleX(1);
+  }
+  45% {
+    opacity: 0.3;
+    transform: scaleX(0.55);
+  }
 }
 
 @keyframes pet-ball-spin {
-  to { transform: rotate(720deg); }
+  to {
+    transform: rotate(720deg);
+  }
 }
 
 .pet-soap-bubble {
@@ -117,7 +157,12 @@
   aspect-ratio: 1;
   border: 1.5px solid #78aab8;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #ffffffdd 0 9%, #e3fbfc75 15% 50%, #a4d4df8a 85%);
+  background: radial-gradient(
+    circle at 30% 25%,
+    #ffffffdd 0 9%,
+    #e3fbfc75 15% 50%,
+    #a4d4df8a 85%
+  );
   box-shadow: inset -2px -2px 2px #73b2ca33;
   opacity: 0;
   animation: pet-soap-rise 1.7s ease-out var(--bubble-delay) both;
@@ -128,17 +173,35 @@
   position: absolute;
   inset: 36%;
   color: #e7fdff;
-  box-shadow: 0 -7px currentColor, 0 7px currentColor, -7px 0 currentColor, 7px 0 currentColor;
+  box-shadow:
+    0 -7px currentColor,
+    0 7px currentColor,
+    -7px 0 currentColor,
+    7px 0 currentColor;
   opacity: 0;
   animation: pet-soap-pop 1.7s ease-out var(--bubble-delay) both;
 }
 
 @keyframes pet-soap-rise {
-  0% { bottom: 12%; opacity: 0; transform: translateX(0) scale(0.5); }
-  15% { opacity: 0.9; }
-  75% { opacity: 0.85; border-color: #78aab8; }
-  88% { bottom: 90%; opacity: 1; transform: translateX(var(--bubble-drift)) scale(1); }
-  94%, 100% {
+  0% {
+    bottom: 12%;
+    opacity: 0;
+    transform: translateX(0) scale(0.5);
+  }
+  15% {
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.85;
+    border-color: #78aab8;
+  }
+  88% {
+    bottom: 90%;
+    opacity: 1;
+    transform: translateX(var(--bubble-drift)) scale(1);
+  }
+  94%,
+  100% {
     bottom: 100%;
     border-color: transparent;
     background: transparent;
@@ -149,9 +212,16 @@
 }
 
 @keyframes pet-soap-pop {
-  0%, 85% { opacity: 0; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
+  0%,
+  85% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .pet-clean-sparkle {
@@ -159,18 +229,47 @@
   width: 0.75rem;
   aspect-ratio: 1;
   background: #effdff;
-  clip-path: polygon(50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
+  clip-path: polygon(
+    50% 0,
+    65% 35%,
+    100% 50%,
+    65% 65%,
+    50% 100%,
+    35% 65%,
+    0 50%,
+    35% 35%
+  );
   opacity: 0;
   animation: pet-clean-shine 0.7s steps(3, end) both;
 }
 
-.pet-clean-sparkle-0 { left: 16%; top: 32%; animation-delay: 0.7s; }
-.pet-clean-sparkle-1 { left: 78%; top: 47%; animation-delay: 1.15s; }
-.pet-clean-sparkle-2 { left: 48%; top: 18%; animation-delay: 1.6s; }
+.pet-clean-sparkle-0 {
+  left: 16%;
+  top: 32%;
+  animation-delay: 0.7s;
+}
+.pet-clean-sparkle-1 {
+  left: 78%;
+  top: 47%;
+  animation-delay: 1.15s;
+}
+.pet-clean-sparkle-2 {
+  left: 48%;
+  top: 18%;
+  animation-delay: 1.6s;
+}
 
 @keyframes pet-clean-shine {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  35%, 65% { opacity: 1; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  35%,
+  65% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -180,10 +279,18 @@
     animation: none;
   }
 
-  .pet-action-effect { opacity: 1; }
-  .pet-soap-bubble { opacity: 0.8; }
-  .pet-soap-bubble:nth-child(n + 5) { display: none; }
+  .pet-action-effect {
+    opacity: 1;
+  }
+  .pet-soap-bubble {
+    opacity: 0.8;
+  }
+  .pet-soap-bubble:nth-child(n + 5) {
+    display: none;
+  }
   .pet-soap-bubble::after,
   .pet-clean-sparkle,
-  .pet-food-stream { display: none; }
+  .pet-food-stream {
+    display: none;
+  }
 }

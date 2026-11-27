@@ -33,6 +33,7 @@ function LoginModeSwitch({ isLogin, disabled, onSelectMode }) {
   );
 }
 
+// Both modes share the same form state. Registration-only fields stay hidden during login.
 function LoginFormFields({ isLogin, form, fieldErrors, readOnly, onChange }) {
   return (
     <>
@@ -88,6 +89,7 @@ function getSubmitLabel(isLogin, isPending) {
 }
 
 export default function Login({ initialMode = 'login' }) {
+  // The form hook handles validation so field errors render beside their inputs.
   const {
     isLogin,
     form,

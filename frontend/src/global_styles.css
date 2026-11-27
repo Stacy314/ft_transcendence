@@ -1,6 +1,6 @@
+@import 'tailwindcss';
 
-@import "tailwindcss";
-
+/* Tailwind uses these tokens to generate classes such as bg-primary and text-muted. */
 @theme {
   /* page and containers */
   --color-page: #ecd19c;

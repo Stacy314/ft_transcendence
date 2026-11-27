@@ -142,6 +142,7 @@
     outline-offset: 3px;
   }
 
+  /* Field with an error. */
   .ui-form-field input[aria-invalid='true'] {
     outline: 2px solid #7a1010;
     outline-offset: -2px;
@@ -152,10 +153,12 @@
     @apply m-0 font-bold text-[#7a1010];
   }
 
+  /* Message under a field. */
   .ui-field-error {
     @apply text-[0.85rem];
   }
 
+  /* General message above the button (e.g. wrong password, server down). */
   .ui-form-error {
     @apply rounded-[8px] bg-[#fff4f2] px-[0.8rem] py-[0.6rem];
   }

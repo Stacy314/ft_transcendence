@@ -4,6 +4,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useMe, switchUser } from '../hooks/useMe';
 import { PUBLIC_PATHS, setUnauthorizedHandler } from '../services/api';
 
+// Wraps the routes and checks the session on startup. It also registers the
+// router handler for expired sessions, so the redirect does not reload the page.
+// Must be rendered inside the router (it uses useNavigate).
 export default function AuthBootstrap({ children }) {
   const { isPending } = useMe();
   const navigate = useNavigate();

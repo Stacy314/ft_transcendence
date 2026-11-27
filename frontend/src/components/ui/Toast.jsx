@@ -1,4 +1,5 @@
 export default function Toast({ children, onDismiss }) {
+  // Keep the live region mounted so screen readers pick up new messages.
   const hasMessage = Boolean(children);
 
   return (
@@ -6,8 +7,8 @@ export default function Toast({ children, onDismiss }) {
       <div
         className={
           hasMessage
-            ? "flex items-start gap-4 rounded-lg bg-surface-tinted p-4 text-foreground shadow-lg"
-            : ""
+            ? 'flex items-start gap-4 rounded-lg bg-surface-tinted p-4 text-foreground shadow-lg'
+            : ''
         }
       >
         <div role="status">{children}</div>

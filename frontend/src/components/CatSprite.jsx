@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import '../assets/cat-idle.css';
 
+// Align the species to the same floor even when their feet sit at different rows in the source images.
 const SPRITE_GROUND_Y = 55;
 
 // Regions use the source PNG's pixel grid; no part is rescaled independently.
@@ -34,7 +35,9 @@ const SPRITES = {
     width: 68,
     height: 64,
     groundY: 48,
-    head: [{ d: 'M0 10H26V18H27V19H28V20H29V21H30V30H29V35H30V36H31V37H32V42H0Z' }],
+    head: [
+      { d: 'M0 10H26V18H27V19H28V20H29V21H30V30H29V35H30V36H31V37H32V42H0Z' },
+    ],
     body: [{ d: 'M26 0H68V30H30V21H29V20H28V19H27V18H26Z' }],
     tail: [],
     sleepSymbol: [{ x: 15, y: 2, width: 5, height: 7 }],
@@ -46,16 +49,20 @@ const SPRITES = {
 };
 
 function Regions({ regions, fill }) {
-  return regions.map((region, index) => (
-    region.d
-      ? <path key={index} {...region} fill={fill} />
-      : <rect key={index} {...region} fill={fill} />
-  ));
+  return regions.map((region, index) =>
+    region.d ? (
+      <path key={index} {...region} fill={fill} />
+    ) : (
+      <rect key={index} {...region} fill={fill} />
+    ),
+  );
 }
 
 export default function CatSprite({ image, species, label, className = '' }) {
+  // SVG IDs are document-wide, so each sprite needs its own masks and clips.
   const instanceId = useId().replaceAll(':', '');
   const sourceId = `cat-${instanceId}-source`;
+  // Cut moving parts out of the static layer so the original pixels do not show underneath.
   const baseMaskId = `cat-${instanceId}-base`;
   const headMaskId = `cat-${instanceId}-head`;
   const bodyClipId = `cat-${instanceId}-body`;
@@ -63,11 +70,20 @@ export default function CatSprite({ image, species, label, className = '' }) {
   const sleepSymbolClipId = `cat-${instanceId}-sleep-symbol`;
   const connectorClipId = `cat-${instanceId}-connectors`;
   const earConnectorClipId = `cat-${instanceId}-ear-connectors`;
+  // CSS alternates the original eyes with closed eyelids to make the cat blink.
   const eyesClipId = `cat-${instanceId}-eyes`;
   const sprite = SPRITES[species];
 
+  // Species without animation regions can still use their original image.
   if (!sprite) {
-    return <img className={className} src={image} alt={label} data-species={species} />;
+    return (
+      <img
+        className={className}
+        src={image}
+        alt={label}
+        data-species={species}
+      />
+    );
   }
 
   return (
@@ -90,11 +106,33 @@ export default function CatSprite({ image, species, label, className = '' }) {
           height={sprite.height}
           preserveAspectRatio="none"
         />
-        <mask id={baseMaskId} maskUnits="userSpaceOnUse" x="0" y="0" width={sprite.width} height={sprite.height}>
+        <mask
+          id={baseMaskId}
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width={sprite.width}
+          height={sprite.height}
+        >
           <rect width={sprite.width} height={sprite.height} fill="white" />
-          <Regions regions={[...sprite.head, ...sprite.body, ...sprite.tail, ...sprite.sleepSymbol]} fill="black" />
+          <Regions
+            regions={[
+              ...sprite.head,
+              ...sprite.body,
+              ...sprite.tail,
+              ...sprite.sleepSymbol,
+            ]}
+            fill="black"
+          />
         </mask>
-        <mask id={headMaskId} maskUnits="userSpaceOnUse" x="0" y="0" width={sprite.width} height={sprite.height}>
+        <mask
+          id={headMaskId}
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width={sprite.width}
+          height={sprite.height}
+        >
           <Regions regions={sprite.head} fill="white" />
           <Regions regions={[...sprite.ears, ...sprite.eyes]} fill="black" />
         </mask>
@@ -117,7 +155,11 @@ export default function CatSprite({ image, species, label, className = '' }) {
           <Regions regions={sprite.eyes} />
         </clipPath>
         {sprite.ears.map((ear, index) => (
-          <clipPath key={index} id={`cat-${instanceId}-ear-${index}`} clipPathUnits="userSpaceOnUse">
+          <clipPath
+            key={index}
+            id={`cat-${instanceId}-ear-${index}`}
+            clipPathUnits="userSpaceOnUse"
+          >
             <rect {...ear} />
           </clipPath>
         ))}
@@ -140,8 +182,14 @@ export default function CatSprite({ image, species, label, className = '' }) {
         <use href={`#${sourceId}`} mask={`url(#${headMaskId})`} />
         <use href={`#${sourceId}`} clipPath={`url(#${earConnectorClipId})`} />
         {sprite.ears.map((ear, index) => (
-          <g key={index} className={`cat-sprite-part cat-sprite-ear cat-sprite-ear-${index}`}>
-            <use href={`#${sourceId}`} clipPath={`url(#cat-${instanceId}-ear-${index})`} />
+          <g
+            key={index}
+            className={`cat-sprite-part cat-sprite-ear cat-sprite-ear-${index}`}
+          >
+            <use
+              href={`#${sourceId}`}
+              clipPath={`url(#cat-${instanceId}-ear-${index})`}
+            />
           </g>
         ))}
         {sprite.eyes.length > 0 && (
@@ -152,7 +200,14 @@ export default function CatSprite({ image, species, label, className = '' }) {
             <g className="cat-sprite-part cat-sprite-eyes-closed" opacity="0">
               <Regions regions={sprite.eyes} fill="#e8e8e8" />
               {sprite.eyes.map((eye, index) => (
-                <rect key={index} x={eye.x} y={eye.y + 3} width={eye.width} height="1" fill="#3a5a8d" />
+                <rect
+                  key={index}
+                  x={eye.x}
+                  y={eye.y + 3}
+                  width={eye.width}
+                  height="1"
+                  fill="#3a5a8d"
+                />
               ))}
             </g>
           </>

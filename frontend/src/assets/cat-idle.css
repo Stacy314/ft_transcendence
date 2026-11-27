@@ -11,6 +11,7 @@
   image-rendering: pixelated;
 }
 
+/* Change the motion per species while reusing the same clipped SVG layers. */
 .cat-sprite[data-species='cat-2'] {
   --cat-idle-duration: 4s;
   --cat-head-animation: none;
@@ -20,16 +21,20 @@
   --cat-ear-duration: 8s;
 }
 
+/* Step timing moves the parts in discrete jumps to preserve the pixel-art look. */
 .cat-sprite-head {
-  animation: var(--cat-head-animation) var(--cat-idle-duration) steps(1, end) infinite;
+  animation: var(--cat-head-animation) var(--cat-idle-duration) steps(1, end)
+    infinite;
 }
 
 .cat-sprite-body {
-  animation: var(--cat-body-animation, none) var(--cat-idle-duration) steps(1, end) infinite;
+  animation: var(--cat-body-animation, none) var(--cat-idle-duration)
+    steps(1, end) infinite;
 }
 
 .cat-sprite-tail {
-  animation: var(--cat-tail-animation) var(--cat-tail-duration) steps(1, end) infinite;
+  animation: var(--cat-tail-animation) var(--cat-tail-duration) steps(1, end)
+    infinite;
 }
 
 .cat-sprite-ear {
@@ -50,47 +55,125 @@
 }
 
 @keyframes cat-head-idle {
-  0%, 20%, 55%, 100% { transform: translate(0, 0); }
-  30%, 45%, 75%, 85% { transform: translate(0, 1px); }
+  0%,
+  20%,
+  55%,
+  100% {
+    transform: translate(0, 0);
+  }
+  30%,
+  45%,
+  75%,
+  85% {
+    transform: translate(0, 1px);
+  }
 }
 
 @keyframes cat-tail-idle {
-  0%, 20%, 60%, 100% { transform: translate(0, 0); }
-  30%, 45% { transform: translate(1px, 0); }
-  75%, 85% { transform: translate(-1px, 0); }
+  0%,
+  20%,
+  60%,
+  100% {
+    transform: translate(0, 0);
+  }
+  30%,
+  45% {
+    transform: translate(1px, 0);
+  }
+  75%,
+  85% {
+    transform: translate(-1px, 0);
+  }
 }
 
 @keyframes cat-ear-idle {
-  0%, 60%, 68%, 100% { transform: translate(0, 0); }
-  62%, 65% { transform: translate(0, 1px); }
+  0%,
+  60%,
+  68%,
+  100% {
+    transform: translate(0, 0);
+  }
+  62%,
+  65% {
+    transform: translate(0, 1px);
+  }
 }
 
 @keyframes cat-eyes-open {
-  0%, 72%, 78%, 100% { opacity: 1; }
-  74%, 76% { opacity: 0; }
+  0%,
+  72%,
+  78%,
+  100% {
+    opacity: 1;
+  }
+  74%,
+  76% {
+    opacity: 0;
+  }
 }
 
 @keyframes cat-eyes-closed {
-  0%, 72%, 78%, 100% { opacity: 0; }
-  74%, 76% { opacity: 1; }
+  0%,
+  72%,
+  78%,
+  100% {
+    opacity: 0;
+  }
+  74%,
+  76% {
+    opacity: 1;
+  }
 }
 
 @keyframes cat-sleep-body {
-  0%, 20%, 80%, 100% { transform: translate(0, 0); }
-  35%, 65% { transform: translate(0, -1px); }
+  0%,
+  20%,
+  80%,
+  100% {
+    transform: translate(0, 0);
+  }
+  35%,
+  65% {
+    transform: translate(0, -1px);
+  }
 }
 
 @keyframes cat-sleep-tail {
-  0%, 65%, 90%, 100% { transform: translate(0, 0); }
-  70%, 80% { transform: translate(1px, 0); }
+  0%,
+  65%,
+  90%,
+  100% {
+    transform: translate(0, 0);
+  }
+  70%,
+  80% {
+    transform: translate(1px, 0);
+  }
 }
 
 @keyframes cat-sleep-symbol {
-  0%, 20%, 100% { opacity: 1; transform: translate(0, 0); }
-  35% { opacity: 1; transform: translate(-1px, -1px); }
-  50% { opacity: 1; transform: translate(-1px, -2px); }
-  70% { opacity: 0; transform: translate(-1px, -2px); }
-  85% { opacity: 0; transform: translate(0, 0); }
+  0%,
+  20%,
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-1px, -1px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-1px, -2px);
+  }
+  70% {
+    opacity: 0;
+    transform: translate(-1px, -2px);
+  }
+  85% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

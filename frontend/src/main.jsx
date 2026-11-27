@@ -5,6 +5,7 @@ import { queryClient } from './lib/queryClient';
 import AppRoutes from './routes.jsx';
 import './global_styles.css';
 
+// Keep one query cache above the router so pages share fetched session and pet data.
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

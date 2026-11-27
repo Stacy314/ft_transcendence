@@ -34,6 +34,7 @@ export function useLoginForm(initialMode) {
     setFormError('');
   }
 
+  // Updates one field and hides its old error as soon as the user edits it.
   function updateField(event) {
     const { name, value } = event.target;
     setForm((previous) => ({ ...previous, [name]: value }));
@@ -42,6 +43,7 @@ export function useLoginForm(initialMode) {
     setFormError('');
   }
 
+  // TanStack Query passes the submitted mutation variables as the second argument.
   function showServerError(error, submittedValues) {
     const { message, fields } = getApiError(error);
     const feedback = getServerFormErrors(fields, submittedValues, message);
@@ -49,6 +51,7 @@ export function useLoginForm(initialMode) {
     setFormError(feedback.formError);
   }
 
+  // Back to the page that sent the user here (expired session), else dashboard.
   function navigateAfterLogin() {
     const from = location.state?.from;
     const destination = from
@@ -88,7 +91,7 @@ export function useLoginForm(initialMode) {
     setFieldErrors(clientErrors);
     setFormError('');
 
-    if (Object.keys(clientErrors).length > 0) return;
+    if (Object.keys(clientErrors).length > 0) return; // nothing is sent
 
     if (isLogin) {
       signIn();

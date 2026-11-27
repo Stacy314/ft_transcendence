@@ -8,6 +8,7 @@ export default function Button({
   disabled = false,
   ...props
 }) {
+  // Disable the button while a request is running to prevent repeat submissions.
   return (
     <button
       type={type}

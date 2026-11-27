@@ -4,8 +4,9 @@ export function usePetActionAnimation() {
   const [activeAction, setActiveAction] = useState(null);
   const nextActionId = useRef(0);
 
+  // A previous animation may finish after another click. Only clear the action whose ID matches.
   const finishAction = useCallback((id) => {
-    setActiveAction(current => current?.id === id ? null : current);
+    setActiveAction((current) => (current?.id === id ? null : current));
   }, []);
 
   const playAction = useCallback((type) => {
@@ -17,7 +18,10 @@ export function usePetActionAnimation() {
     if (!activeAction) return;
 
     // Also finish when reduced motion disables the CSS animation-end event.
-    const timeout = window.setTimeout(() => finishAction(activeAction.id), 3000);
+    const timeout = window.setTimeout(
+      () => finishAction(activeAction.id),
+      3000,
+    );
     return () => window.clearTimeout(timeout);
   }, [activeAction, finishAction]);
 

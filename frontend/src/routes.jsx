@@ -21,6 +21,7 @@ function NotFound() {
   );
 }
 
+// "/" has no page of its own: send the user where they belong.
 function HomeRedirect() {
   const { isLoggedIn } = useCurrentUser();
   return <Navigate to={isLoggedIn ? '/dashboard' : '/login'} replace />;

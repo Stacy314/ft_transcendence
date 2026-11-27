@@ -1,5 +1,8 @@
 import { api, resetCsrfToken } from './api';
 
+// Auth endpoints of the Rails API. Registration and login return the user
+// object { id, username, email, name }.
+
 // POST /api/registration → 201 { user } | 422 { errors: { field: [...] } }
 export async function register({
   username,
@@ -21,12 +24,14 @@ export async function register({
   return data.user;
 }
 
+// POST /api/session → 201 { user } | 401 { error }
 export async function login({ username, password }) {
   const { data } = await api.post('/session', { username, password });
   resetCsrfToken();
   return data.user;
 }
 
+// DELETE /api/session → 204
 export async function logout() {
   try {
     await api.delete('/session');
@@ -35,6 +40,7 @@ export async function logout() {
   }
 }
 
+// GET /api/session → 200 { user } when logged in.
 // When nobody is logged in the backend answers 401 (or 200 { user: null });
 // both become null here instead of an error.
 export async function getCurrentUser() {

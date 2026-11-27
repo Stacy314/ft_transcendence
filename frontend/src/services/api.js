@@ -1,16 +1,19 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
+// Shared HTTP client for every request to the Rails API.
+//
 // Authentication is a server-side session stored in an httpOnly cookie
 // (_tamagotchi_session). The browser sends it automatically; JavaScript never
 // sees it. Requests that change data must also carry a CSRF token, which Rails
 // gives us from GET /api/csrf.
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
-  withCredentials: true,
+  withCredentials: true, // send the session cookie
   headers: { Accept: 'application/json' },
 });
 
+// ---------- CSRF ----------
 const SAFE_METHODS = ['get', 'head', 'options'];
 let csrfToken = null;
 let csrfRequest = null; // shared promise, so parallel requests fetch the token once
@@ -45,9 +48,12 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+// ---------- 401 handling ----------
 export const PUBLIC_PATHS = ['/', '/login', '/signup', '/privacy', '/terms'];
 const AUTH_ENDPOINTS = ['/session', '/registration', '/csrf'];
 
+// Defaults to a full page redirect. AuthBootstrap replaces it with a router
+// navigation to /login and records the previous location.
 let onUnauthorized = () => {
   if (!PUBLIC_PATHS.includes(window.location.pathname)) {
     window.location.assign('/login');
@@ -86,17 +92,19 @@ api.interceptors.response.use(
     // session: GET /session = "nobody is logged in", POST /session =
     // "wrong username or password". The caller handles those itself.
     const isAuthEndpoint = AUTH_ENDPOINTS.includes(config?.url);
- 
+
     if (status === 401 && !isAuthEndpoint) {
       resetCsrfToken();
       useAuthStore.getState().clearUser();
       onUnauthorized();
     }
- 
+
     return Promise.reject(error);
   },
 );
 
+// ---------- Errors for the UI ----------
+// Turns an API error into { message, fields } for forms.
 export function getApiError(error) {
   const data = error?.response?.data;
   if (!error?.response) {
